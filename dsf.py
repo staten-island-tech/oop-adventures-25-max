@@ -1,17 +1,18 @@
 import time
 import random
-while True:
-    # Generate a random number between 1 and 4
-    random_number = random.randint(1, 4)
-    
-    # Pause for 5 seconds
-    time.sleep(5)
-    
-for int in random_number:
-    if int == 1:
+
+rand = random.randint(1, 4)
+time.sleep(10)
+
+if rand == 1:
         animatronic = True
-    else:
+else:
         animatronic = False
+
+if animatronic == True:
+        print ("ohmy god theyre gonna get me")
+elif animatronic == False:
+        print("nothing happened")
 print("There are intruders and now they're inside your house. Stay alive in your bedroom until sunrise to survive. they will activitly search for blUd. movement will increase his awareness ")
 print("everytime you open the flashlight their awarness will increase. if you keep hiding in your closet, it has a higher chance the pone ring which increase the chance of them comin")
 print("Frequently check each camera to spot them")
