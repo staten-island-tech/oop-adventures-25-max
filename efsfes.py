@@ -1,6 +1,7 @@
 import pygame
 import random
 
+
 pygame.init()
 
 screen = pygame.display.set_mode((1200, 800))
@@ -25,6 +26,9 @@ closet_height = 300
 
 door_width = closet_width // 2
 closet_open = False
+under_bed = False
+
+
 
 # 👇 UNDER BED STATE
 under_bed = False
@@ -64,6 +68,11 @@ while running:
     # Bed
     bed = pygame.Rect(0, 625, 350, 100)
     pillow = pygame.Rect(20, 615, 80, 30)
+
+
+    # 🚪 CLOSET (bottom-right)
+    closet = pygame.Rect(1120, 650, 80, 150)
+    pygame.draw.rect(screen, (139, 69, 19), closet)
 
     pygame.draw.rect(screen, (200, 200, 200), bed)
     pygame.draw.rect(screen, (255, 255, 255), pillow)
@@ -156,6 +165,13 @@ while running:
         under_space = pygame.Rect(20, 650, 300, 80)
         pygame.draw.rect(screen, (10, 10, 10), under_space)
 
+        
+        if random.randint(1, 4) == 1:
+                pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
+                pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
+                else
+
+
        
         rand = random.randint(1,4)
         pygame.time(10)
@@ -164,12 +180,16 @@ while running:
             pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
    
 
+
     # Controls text
     controls = font.render("Press E to open/close closet", True, (255, 255, 255))
     screen.blit(controls, (20, 20))
 
     controls2 = font.render("Press Q to look under your bed", True, (255, 255, 255))
     screen.blit(controls2, (20, 50))
+
+    controls3 = font.render("Press F to shine flashlight", True, (255, 255, 255))
+    screen.blit(controls3, (20, 80))
 
     pygame.display.flip()
     clock.tick(60)
