@@ -1,37 +1,23 @@
-# import time
-
-# start = time.time()
-
-
-# while True:
-#     elapsed = time.time() - start
-        
-#     if elapsed >= 10:
-#         break
-
-
-#     time.sleep(0.1)
-
-# print("\nStopped after 10 seconds.")
-
-
 import pygame
+import random
 
 
 pygame.init()
+
 screen = pygame.display.set_mode((1200, 800))
+pygame.display.set_caption("Bedroom Survival")
+
 clock = pygame.time.Clock()
 running = True
 
 font = pygame.font.SysFont(None, 23)
 
+screen_width = 1200
 screen_height = 800
-wall = pygame.Rect(0, screen_height - 50, 300, 50)
 
+# Timer
 start_time = pygame.time.get_ticks()
 
-<<<<<<< Updated upstream
-=======
 # Closet settings
 closet_x = 950
 closet_y = 450
@@ -42,39 +28,52 @@ door_width = closet_width // 2
 closet_open = False
 under_bed = False
 
->>>>>>> Stashed changes
+
+
+# 👇 UNDER BED STATE
+under_bed = False
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-    screen.fill((0, 0, 0))
+        if event.type == pygame.KEYDOWN:
 
-    # time
+            # Closet toggle
+            if event.key == pygame.K_e:
+                closet_open = not closet_open
+
+            # 👇 Under bed toggle
+            if event.key == pygame.K_q:
+                under_bed = not under_bed
+
+    screen.fill((15, 15, 15))
+
+    # Intro text for 3 seconds
     current_time = pygame.time.get_ticks()
-
-    # TEXT (3 seconds only)
     if current_time - start_time < 3000:
         text_surface = font.render(
             "Intruders are inside your house. Survive until sunrise.",
             True,
             (255, 255, 255)
         )
-        text_rect = text_surface.get_rect(center=(600, 400))
+        text_rect = text_surface.get_rect(center=(600, 100))
         screen.blit(text_surface, text_rect)
 
-    # 🛏️ BED
-    bed = pygame.Rect(0, 740, 320, 60)
-    pillow = pygame.Rect(10, 725, 60, 20)
+    # Floor
+    floor = pygame.Rect(0, 740, 1200, 60)
+    pygame.draw.rect(screen, (50, 50, 50), floor)
 
-    pygame.draw.rect(screen, (255, 255, 255), bed, 2)
-    pygame.draw.rect(screen, (255, 255, 255), pillow, 2)
+    # Bed
+    bed = pygame.Rect(0, 625, 350, 100)
+    pillow = pygame.Rect(20, 615, 80, 30)
 
-<<<<<<< Updated upstream
+
     # 🚪 CLOSET (bottom-right)
     closet = pygame.Rect(1120, 650, 80, 150)
     pygame.draw.rect(screen, (139, 69, 19), closet)
-=======
+
     pygame.draw.rect(screen, (200, 200, 200), bed)
     pygame.draw.rect(screen, (255, 255, 255), pillow)
 
@@ -165,11 +164,22 @@ while running:
 
         under_space = pygame.Rect(20, 650, 300, 80)
         pygame.draw.rect(screen, (10, 10, 10), under_space)
+
         
         if random.randint(1, 4) == 1:
                 pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
                 pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
                 else
+
+
+       
+        rand = random.randint(1,4)
+        pygame.time(10)
+        if rand == 1:
+            pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
+            pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
+   
+
 
     # Controls text
     controls = font.render("Press E to open/close closet", True, (255, 255, 255))
@@ -177,7 +187,6 @@ while running:
 
     controls2 = font.render("Press Q to look under your bed", True, (255, 255, 255))
     screen.blit(controls2, (20, 50))
->>>>>>> Stashed changes
 
     controls3 = font.render("Press F to shine flashlight", True, (255, 255, 255))
     screen.blit(controls3, (20, 80))
