@@ -70,10 +70,6 @@ while running:
     pillow = pygame.Rect(20, 615, 80, 30)
 
 
-    # 🚪 CLOSET (bottom-right)
-    closet = pygame.Rect(1120, 650, 80, 150)
-    pygame.draw.rect(screen, (139, 69, 19), closet)
-
     pygame.draw.rect(screen, (200, 200, 200), bed)
     pygame.draw.rect(screen, (255, 255, 255), pillow)
 
@@ -167,20 +163,9 @@ while running:
 
         
         if random.randint(1, 4) == 1:
-                pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
-                pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
-                else
-
-
-       
-        rand = random.randint(1,4)
-        pygame.time(10)
-        if rand == 1:
             pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
             pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
-   
-
-
+                
     # Controls text
     controls = font.render("Press E to open/close closet", True, (255, 255, 255))
     screen.blit(controls, (20, 20))
