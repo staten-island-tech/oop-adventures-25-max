@@ -22,7 +22,7 @@ while animatronic == False:
     while True:
         elapsed = time.time() 
         
-        if elapsed >= 30:
+        if elapsed >= 10:
             break
 
 
@@ -30,8 +30,3 @@ while animatronic == False:
 
     print("\nStopped after 10 seconds.")
 
-if choice == "1":
-    if animatronic == True:
-        input("aaahhh quick use flashlight ")
-    else:
-        input("nothing here. go back? (Y/N)")
