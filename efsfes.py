@@ -48,7 +48,7 @@ while running:
             if event.key == pygame.K_q:
                 under_bed = not under_bed
 
-    screen.fill((15, 15, 15))
+    screen.fill((30, 30, 30))
 
     # Intro text for 3 seconds
     current_time = pygame.time.get_ticks()
@@ -125,6 +125,10 @@ while running:
 
         pygame.draw.rect(screen, (20, 20, 20), inside)
 
+        if random.randint(1, 4) == 1:
+            pygame.draw.circle(screen, (255, 0, 0), (1100, 600), 5)
+            pygame.draw.circle(screen, (255, 0, 0), (1050, 600), 5)
+
     else:
         pygame.draw.rect(screen, (139, 69, 19), left_door)
         pygame.draw.rect(screen, (139, 69, 19), right_door)
@@ -150,6 +154,7 @@ while running:
             (closet_x + door_width + 15, closet_y + closet_height // 2),
             5
         )
+        
 
 
     if under_bed:
