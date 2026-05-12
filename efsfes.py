@@ -44,7 +44,7 @@ while running:
             if event.key == pygame.K_e:
                 closet_open = not closet_open
 
-            # 👇 Under bed toggle
+            # Under bed toggle
             if event.key == pygame.K_q:
                 under_bed = not under_bed
 
@@ -179,12 +179,10 @@ while running:
         if random.randint(1, 4) == 1:
                 pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
                 pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
-                else
-
+                
 
        
         rand = random.randint(1,4)
-        pygame.time(10)
         if rand == 1:
             pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
             pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
