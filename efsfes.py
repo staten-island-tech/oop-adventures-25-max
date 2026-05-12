@@ -69,9 +69,18 @@ while running:
     bed = pygame.Rect(0, 625, 350, 100)
     pillow = pygame.Rect(20, 615, 80, 30)
 
-
+    
     pygame.draw.rect(screen, (200, 200, 200), bed)
     pygame.draw.rect(screen, (255, 255, 255), pillow)
+
+    #window
+    window = pygame.Rect(325, 350, 186, 180)
+    pygame.draw.rect(screen, (13, 14, 46), window)
+    #window cross thingy
+    window1=pygame.Rect(413, 350, 10, 180)
+    pygame.draw.rect(screen,(30,30,30), window1)
+    window2=pygame.Rect(325, 435, 186, 10)
+    pygame.draw.rect(screen,(30,30,30), window2)
 
     # Closet body
     closet_body = pygame.Rect(
@@ -127,7 +136,7 @@ while running:
 
         if random.randint(1, 4) == 1:
             pygame.draw.circle(screen, (255, 0, 0), (1100, 600), 5)
-            pygame.draw.circle(screen, (255, 0, 0), (1050, 600), 5)
+            pygame.draw.circle(screen, (255, 0, 0), (1000, 600), 5)
 
     else:
         pygame.draw.rect(screen, (139, 69, 19), left_door)
