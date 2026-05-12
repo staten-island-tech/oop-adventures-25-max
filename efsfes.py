@@ -177,9 +177,20 @@ while running:
 
         
         if random.randint(1, 4) == 1:
+                pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
+                pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
+                else
+
+
+       
+        rand = random.randint(1,4)
+        pygame.time(10)
+        if rand == 1:
             pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
             pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
-                
+   
+
+
     # Controls text
     controls = font.render("Press E to open/close closet", True, (255, 255, 255))
     screen.blit(controls, (20, 20))
