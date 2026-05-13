@@ -27,11 +27,7 @@ closet_height = 300
 door_width = closet_width // 2
 closet_open = False
 under_bed = False
-
-
-
-# 👇 UNDER BED STATE
-under_bed = False
+light = False
 
 while running:
     for event in pygame.event.get():
@@ -48,7 +44,12 @@ while running:
             if event.key == pygame.K_q:
                 under_bed = not under_bed
 
+            if event.key == pygame.K_f:
+                light = not light
     screen.fill((30, 30, 30))
+
+    if light == True:
+        pygame.mouse.get_pos()  
 
     # Intro text for 3 seconds
     current_time = pygame.time.get_ticks()
@@ -179,15 +180,7 @@ while running:
         if random.randint(1, 4) == 1:
                 pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
                 pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
-                
-
-       
-        rand = random.randint(1,4)
-        if rand == 1:
-            pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
-            pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
-   
-
+ 
 
     # Controls text
     controls = font.render("Press E to open/close closet", True, (255, 255, 255))
@@ -196,7 +189,7 @@ while running:
     controls2 = font.render("Press Q to look under your bed", True, (255, 255, 255))
     screen.blit(controls2, (20, 50))
 
-    controls3 = font.render("Press F to shine flashlight", True, (255, 255, 255))
+    controls3 = font.render("Press F to open light menu", True, (255, 255, 255))
     screen.blit(controls3, (20, 80))
 
     pygame.display.flip()
