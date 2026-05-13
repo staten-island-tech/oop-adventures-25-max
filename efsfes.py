@@ -52,7 +52,7 @@ while running:
 
     # Intro text for 3 seconds
     current_time = pygame.time.get_ticks()
-    if current_time - start_time < 3000:
+    if current_time - start_time < 10000:
         text_surface = font.render(
             "Intruders are inside your house. Survive until sunrise.",
             True,
@@ -68,8 +68,6 @@ while running:
     # Bed
     bed = pygame.Rect(0, 625, 350, 100)
     pillow = pygame.Rect(20, 615, 80, 30)
-
-    
     pygame.draw.rect(screen, (200, 200, 200), bed)
     pygame.draw.rect(screen, (255, 255, 255), pillow)
 
@@ -82,7 +80,12 @@ while running:
     window2=pygame.Rect(325, 435, 186, 10)
     pygame.draw.rect(screen,(30,30,30), window2)
 
-    #
+    #door
+    door=pygame.Rect(600, 440, 175, 300)
+    pygame.draw.rect(screen, (120, 70, 25), door)
+    handle=pygame.Rect(723, 590, 35, 10)
+    pygame.draw.circle(screen, (255, 215, 0), (755, 595), 9)
+    pygame.draw.rect(screen, (255, 215, 0 ), handle)
 
     # Closet body
     closet_body = pygame.Rect(
@@ -137,8 +140,8 @@ while running:
         pygame.draw.rect(screen, (20, 20, 20), inside)
 
         if random.randint(1, 4) == 1:
-            pygame.draw.circle(screen, (255, 0, 0), (1100, 600), 5)
-            pygame.draw.circle(screen, (255, 0, 0), (1000, 600), 5)
+            pygame.draw.circle(screen, (255, 0, 0), (1065, 600), 5)
+            pygame.draw.circle(screen, (255, 0, 0), (1015, 600), 5)
 
     else:
         pygame.draw.rect(screen, (139, 69, 19), left_door)
@@ -181,17 +184,11 @@ while running:
         if random.randint(1, 4) == 1:
                 pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
                 pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
-                else
+                
 
 
        
-        rand = random.randint(1,4)
-        pygame.time(10)
-        if rand == 1:
-            pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
-            pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
-   
-
+       
 
     # Controls text
     controls = font.render("Press E to open/close closet", True, (255, 255, 255))
