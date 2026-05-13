@@ -82,6 +82,8 @@ while running:
     window2=pygame.Rect(325, 435, 186, 10)
     pygame.draw.rect(screen,(30,30,30), window2)
 
+    #
+
     # Closet body
     closet_body = pygame.Rect(
         closet_x,
