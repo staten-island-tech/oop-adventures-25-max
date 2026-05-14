@@ -72,7 +72,7 @@ while running:
                 under_bed = not under_bed
 
             if event.key == pygame.K_f:
-                under_bed = not under_bed
+                light = not light
 
             if event.key == pygame.K_d:
                 open_door = not open_door
@@ -80,7 +80,9 @@ while running:
     screen.fill((30, 30, 30))
 
     if light == True:
-        pygame.mouse.get_pos()  
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        screen.fill((30, 30, 30))
+        pygame.draw.circle(screen, (0, 255, 0), (mouse_x, mouse_y), 20)
 
     # Intro text for 3 seconds
     current_time = pygame.time.get_ticks()
