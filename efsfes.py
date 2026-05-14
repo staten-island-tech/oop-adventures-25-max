@@ -73,10 +73,7 @@ while running:
                 open_door = not open_door
 
     screen.fill((30, 30, 30))
-    if light == True:
-        mouse_x, mouse_y = pygame.mouse.get_pos()
-        screen.fill((30, 30, 30))
-        pygame.draw.circle(screen, (0, 255, 0), (mouse_x, mouse_y), 20)
+
 
 
 
@@ -216,6 +213,9 @@ while running:
         pygame.draw.rect(screen, (10, 10, 10), under_space)
         monster.monster_bed()
         
+    if light == True:
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        pygame.draw.circle(screen, (0, 255, 0), (mouse_x, mouse_y), 20)
 
     # Controls text
     controls = font.render("Press E to open/close closet", True, (255, 255, 255))
