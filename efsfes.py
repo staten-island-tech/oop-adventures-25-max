@@ -46,12 +46,7 @@ closet_door_width = closet_width // 2
 closet_open = False
 under_bed = False
 open_door = False
-
-
-
-
-
-
+light = False
 
 # 👇 UNDER BED STATE
 under_bed = False
@@ -78,11 +73,13 @@ while running:
                 open_door = not open_door
 
     screen.fill((30, 30, 30))
-
     if light == True:
         mouse_x, mouse_y = pygame.mouse.get_pos()
         screen.fill((30, 30, 30))
         pygame.draw.circle(screen, (0, 255, 0), (mouse_x, mouse_y), 20)
+
+
+
 
     # Intro text for 3 seconds
     current_time = pygame.time.get_ticks()
@@ -219,10 +216,6 @@ while running:
         pygame.draw.rect(screen, (10, 10, 10), under_space)
         monster.monster_bed()
         
-        if random.randint(1, 4) == 1:
-                pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
-                pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
-
 
     # Controls text
     controls = font.render("Press E to open/close closet", True, (255, 255, 255))
