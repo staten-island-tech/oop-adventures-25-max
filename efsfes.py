@@ -24,10 +24,25 @@ closet_y = 450
 closet_width = 180
 closet_height = 300
 
-door_width = closet_width // 2
+closet_door_width = closet_width // 2
 closet_open = False
 under_bed = False
+<<<<<<< Updated upstream
 light = False
+=======
+
+#door settings
+door_x = 600
+door_y =  440
+door_width = 175
+door_height = 300
+
+
+
+
+# 👇 UNDER BED STATE
+under_bed = False
+>>>>>>> Stashed changes
 
 while running:
     for event in pygame.event.get():
@@ -102,14 +117,14 @@ while running:
     left_door = pygame.Rect(
         closet_x,
         closet_y,
-        door_width,
+     closet_door_width,
         closet_height
     )
 
     right_door = pygame.Rect(
-        closet_x + door_width,
+        closet_x + closet_door_width,
         closet_y,
-        door_width,
+     closet_door_width,
         closet_height
     )
 
@@ -151,22 +166,22 @@ while running:
         pygame.draw.line(
             screen,
             (80, 40, 10),
-            (closet_x + door_width, closet_y),
-            (closet_x + door_width, closet_y + closet_height),
+            (closet_x + closet_door_width, closet_y),
+            (closet_x + closet_door_width, closet_y + closet_height),
             3
         )
 
         pygame.draw.circle(
             screen,
             (255, 215, 0),
-            (closet_x + door_width - 15, closet_y + closet_height // 2),
+            (closet_x + closet_door_width - 15, closet_y + closet_height // 2),
             5
         )
 
         pygame.draw.circle(
             screen,
             (255, 215, 0),
-            (closet_x + door_width + 15, closet_y + closet_height // 2),
+            (closet_x + closet_door_width + 15, closet_y + closet_height // 2),
             5
         )
         
@@ -196,6 +211,9 @@ while running:
 
     controls3 = font.render("Press F to open light menu", True, (255, 255, 255))
     screen.blit(controls3, (20, 80))
+
+    controls4 = font.render("Press D to check the door", True, (255, 255, 255))
+    screen.blit(controls4, (20, 110))
 
     pygame.display.flip()
     clock.tick(60)
