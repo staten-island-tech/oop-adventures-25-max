@@ -183,9 +183,11 @@ while running:
         
     if open_door:
         opened = pygame.Rect(door_x - opened_door, door_y, opened_door, door_height)
-        pygame.draw.rect(screen, (40, 15, 5), opened)
+        pygame.draw.rect(screen, (90, 50, 20), opened)
         hallway = pygame.Rect(door_x, door_y, door_width, door_height)
         pygame.draw.rect(screen,(10,10,10), hallway)
+        handle_=pygame.Rect(723 - opened_door - door_x, 590, 35, 10)
+        pygame.draw.rect(screen, (255, 215, 0), handle_)
     else:
         door = pygame.Rect(door_x, door_y, door_width, door_height)
         pygame.draw.rect(screen, (120, 70, 25), door)
