@@ -1,7 +1,18 @@
 import pygame
 import random
+class Monster:
+    def __init__(self):
+        pass
+    def monster_bed(self):
+         if random.randint(1, 4) == 1:
+            pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
+            pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
+    def monster_closet(self):
+        if random.randint(1, 4) == 1:
+            pygame.draw.circle(screen, (255, 0, 0), (1065, 600), 5)
+            pygame.draw.circle(screen, (255, 0, 0), (1015, 600), 5)
 
-
+monster = Monster()
 pygame.init()
 
 screen = pygame.display.set_mode((1200, 800))
@@ -49,8 +60,12 @@ while running:
     screen.fill((30, 30, 30))
 
     if light == True:
-        pygame.mouse.get_pos()  
-
+ 
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        screen.fill((30, 30, 30))
+    # Draw a circle at the cursor position
+        pygame.draw.circle(screen, (0, 255, 0), (mouse_x, mouse_y), 20)
+    
     # Intro text for 3 seconds
     current_time = pygame.time.get_ticks()
     if current_time - start_time < 10000:
@@ -139,10 +154,8 @@ while running:
         )
 
         pygame.draw.rect(screen, (20, 20, 20), inside)
-
-        if random.randint(1, 4) == 1:
-            pygame.draw.circle(screen, (255, 0, 0), (1065, 600), 5)
-            pygame.draw.circle(screen, (255, 0, 0), (1015, 600), 5)
+        monster.monster_closet()
+        
 
     else:
         pygame.draw.rect(screen, (139, 69, 19), left_door)
@@ -180,11 +193,9 @@ while running:
 
         under_space = pygame.Rect(20, 650, 300, 80)
         pygame.draw.rect(screen, (10, 10, 10), under_space)
-
+        monster.monster_bed()
         
-        if random.randint(1, 4) == 1:
-                pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
-                pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
+
 
 
     # Controls text
@@ -194,7 +205,7 @@ while running:
     controls2 = font.render("Press Q to look under your bed", True, (255, 255, 255))
     screen.blit(controls2, (20, 50))
 
-    controls3 = font.render("Press F to open light menu", True, (255, 255, 255))
+    controls3 = font.render("Press F to open light", True, (255, 255, 255))
     screen.blit(controls3, (20, 80))
 
     pygame.display.flip()
