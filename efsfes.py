@@ -35,10 +35,26 @@ closet_y = 450
 closet_width = 180
 closet_height = 300
 
-door_width = closet_width // 2
+#door settings
+door_x = 600
+door_y =  440
+door_width = 175
+door_height = 300
+
+opened_door = door_width // 3
+closet_door_width = closet_width // 2
 closet_open = False
 under_bed = False
-light = False
+open_door = False
+
+
+
+
+
+
+
+# 👇 UNDER BED STATE
+under_bed = False
 
 while running:
     for event in pygame.event.get():
@@ -51,21 +67,21 @@ while running:
             if event.key == pygame.K_e:
                 closet_open = not closet_open
 
-            # Under bed toggle
+            # 👇 Under bed toggle
             if event.key == pygame.K_q:
                 under_bed = not under_bed
 
             if event.key == pygame.K_f:
-                light = not light
+                under_bed = not under_bed
+
+            if event.key == pygame.K_d:
+                open_door = not open_door
+
     screen.fill((30, 30, 30))
 
     if light == True:
- 
-        mouse_x, mouse_y = pygame.mouse.get_pos()
-        screen.fill((30, 30, 30))
-    # Draw a circle at the cursor position
-        pygame.draw.circle(screen, (0, 255, 0), (mouse_x, mouse_y), 20)
-    
+        pygame.mouse.get_pos()  
+
     # Intro text for 3 seconds
     current_time = pygame.time.get_ticks()
     if current_time - start_time < 10000:
@@ -96,12 +112,6 @@ while running:
     window2=pygame.Rect(325, 435, 186, 10)
     pygame.draw.rect(screen,(30,30,30), window2)
 
-    #door
-    door=pygame.Rect(600, 440, 175, 300)
-    pygame.draw.rect(screen, (120, 70, 25), door)
-    handle=pygame.Rect(723, 590, 35, 10)
-    pygame.draw.circle(screen, (255, 215, 0), (755, 595), 9)
-    pygame.draw.rect(screen, (255, 215, 0 ), handle)
 
     # Closet body
     closet_body = pygame.Rect(
@@ -117,14 +127,14 @@ while running:
     left_door = pygame.Rect(
         closet_x,
         closet_y,
-        door_width,
+     closet_door_width,
         closet_height
     )
 
     right_door = pygame.Rect(
-        closet_x + door_width,
+        closet_x + closet_door_width,
         closet_y,
-        door_width,
+     closet_door_width,
         closet_height
     )
 
@@ -164,26 +174,36 @@ while running:
         pygame.draw.line(
             screen,
             (80, 40, 10),
-            (closet_x + door_width, closet_y),
-            (closet_x + door_width, closet_y + closet_height),
+            (closet_x + closet_door_width, closet_y),
+            (closet_x + closet_door_width, closet_y + closet_height),
             3
         )
 
         pygame.draw.circle(
             screen,
             (255, 215, 0),
-            (closet_x + door_width - 15, closet_y + closet_height // 2),
+            (closet_x + closet_door_width - 15, closet_y + closet_height // 2),
             5
         )
 
         pygame.draw.circle(
             screen,
             (255, 215, 0),
-            (closet_x + door_width + 15, closet_y + closet_height // 2),
+            (closet_x + closet_door_width + 15, closet_y + closet_height // 2),
             5
         )
         
-
+    if open_door:
+        opened = pygame.Rect(door_x - opened_door, door_y, opened_door, door_height)
+        pygame.draw.rect(screen, (40, 15, 5), opened)
+        hallway = pygame.Rect(door_x, door_y, door_width, door_height)
+        pygame.draw.rect(screen,(10,10,10), hallway)
+    else:
+        door = pygame.Rect(door_x, door_y, door_width, door_height)
+        pygame.draw.rect(screen, (120, 70, 25), door)
+        handle=pygame.Rect(723, 590, 35, 10)
+        pygame.draw.circle(screen, (255, 215, 0), (755, 595), 9)
+        pygame.draw.rect(screen, (255, 215, 0 ), handle)
 
     if under_bed:
         overlay = pygame.Surface((1200, 800))
@@ -195,7 +215,9 @@ while running:
         pygame.draw.rect(screen, (10, 10, 10), under_space)
         monster.monster_bed()
         
-
+        if random.randint(1, 4) == 1:
+                pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
+                pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
 
 
     # Controls text
@@ -205,8 +227,11 @@ while running:
     controls2 = font.render("Press Q to look under your bed", True, (255, 255, 255))
     screen.blit(controls2, (20, 50))
 
-    controls3 = font.render("Press F to open light", True, (255, 255, 255))
+    controls3 = font.render("Press F to open light menu", True, (255, 255, 255))
     screen.blit(controls3, (20, 80))
+
+    controls4 = font.render("Press D to check the door", True, (255, 255, 255))
+    screen.blit(controls4, (20, 110))
 
     pygame.display.flip()
     clock.tick(60)
