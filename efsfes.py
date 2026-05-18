@@ -1,5 +1,6 @@
 import pygame
 import random
+import sys
 class Monster:
     def __init__(self):
         pass
@@ -11,7 +12,10 @@ class Monster:
         if random.randint(1, 4) == 1:
             pygame.draw.circle(screen, (255, 0, 0), (1065, 600), 5)
             pygame.draw.circle(screen, (255, 0, 0), (1015, 600), 5)
-
+    def monster_door(self):
+        if random.randint(1, 4) == 1:
+            pygame.draw.circle(screen, (255, 0, 0), (670, 575), 5)
+            pygame.draw.circle(screen, (255, 0 ,0), (710, 575), 5)
 monster = Monster()
 pygame.init()
 
@@ -192,13 +196,19 @@ while running:
     if open_door:
         opened = pygame.Rect(door_x - opened_door, door_y, opened_door, door_height)
         pygame.draw.rect(screen, (90, 50, 20), opened)
+
         hallway = pygame.Rect(door_x, door_y, door_width, door_height)
         pygame.draw.rect(screen,(10,10,10), hallway)
-        handle_=pygame.Rect(723 - opened_door - door_x, 590, 35, 10)
+
+        handle_=pygame.Rect(758 - door_width - opened_door , 590, 17, 10)
         pygame.draw.rect(screen, (255, 215, 0), handle_)
+
+        monster.monster_door()
+
     else:
         door = pygame.Rect(door_x, door_y, door_width, door_height)
         pygame.draw.rect(screen, (120, 70, 25), door)
+
         handle=pygame.Rect(723, 590, 35, 10)
         pygame.draw.circle(screen, (255, 215, 0), (755, 595), 9)
         pygame.draw.rect(screen, (255, 215, 0 ), handle)
