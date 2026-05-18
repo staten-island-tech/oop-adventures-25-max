@@ -1,6 +1,7 @@
 import pygame
 import random
 import sys
+
 class Monster:
     def __init__(self):
         pass
@@ -17,6 +18,7 @@ class Monster:
             pygame.draw.circle(screen, (255, 0, 0), (670, 575), 5)
             pygame.draw.circle(screen, (255, 0 ,0), (710, 575), 5)
 monster = Monster()
+
 pygame.init()
 
 screen = pygame.display.set_mode((1200, 800))
@@ -226,6 +228,26 @@ while running:
     if light == True:
         mouse_x, mouse_y = pygame.mouse.get_pos()
         pygame.draw.circle(screen, (0, 255, 0), (mouse_x, mouse_y), 20)
+
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  
+            if hallway.collidepoint(event.pos):
+                pygame.draw.rect(screen, (0, 255, 0), hallway)
+
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  
+            if under_space.collidepoint(event.pos):
+                pygame.draw.rect(screen, (0, 255, 0), under_space)
+
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  
+            if inside.collidepoint(event.pos):
+                pygame.draw.rect(screen, (0, 255, 0), inside)
+
+
 
     # Controls text
     controls = font.render("Press E to open/close closet", True, (255, 255, 255))
