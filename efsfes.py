@@ -1,17 +1,15 @@
 import pygame
 import random
-
+import sys
 class Monster:
     def __init__(self):
         self.show_closet_monster = False
 
     def monster_closet(self):
 
-        # runs once when opened
         self.show_closet_monster = (
             random.randint(1, 4) == 1
         )
-
     def draw(self):
 
         if self.show_closet_monster:
