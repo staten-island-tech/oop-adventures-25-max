@@ -66,23 +66,22 @@ while running:
 
         if event.type == pygame.KEYDOWN:
 
-            # Closet toggle
+            # Closet 
             if event.key == pygame.K_e:
                 closet_open = not closet_open
 
-                # Randomize monster when opening closet
                 if closet_open:
                     monster.monster_closet()
 
-            # Under bed toggle
+            # Under bed 
             if event.key == pygame.K_q:
                 under_bed = not under_bed
 
-            # Light toggle
+            # Light 
             if event.key == pygame.K_f:
                 light = not light
 
-            # Door toggle
+            # Door 
             if event.key == pygame.K_d:
                 open_door = not open_door
 
