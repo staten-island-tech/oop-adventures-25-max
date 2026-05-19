@@ -237,7 +237,8 @@ while running:
         
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  
             if hallway.collidepoint(event.pos):
-                pygame.draw.rect(screen, (0, 255, 0), hallway)
+                hallway = pygame.Rect(door_x, door_y, door_width, door_height)
+                pygame.draw.rect(screen,(0,255,0), hallway)
 
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  
             if under_space.collidepoint(event.pos):
