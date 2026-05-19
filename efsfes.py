@@ -1,6 +1,5 @@
 import pygame
 import random
-import sys
 
 class Monster:
     def __init__(self):
@@ -10,7 +9,15 @@ class Monster:
             pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
             pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
     def monster_closet(self):
-        if random.randint(1, 4) == 1:
+
+        # runs once when opened
+        self.show_closet_monster = (
+            random.randint(1, 4) == 1
+        )
+
+    def draw(self):
+
+        if self.show_closet_monster:
             pygame.draw.circle(screen, (255, 0, 0), (1065, 600), 5)
             pygame.draw.circle(screen, (255, 0, 0), (1015, 600), 5)
     def monster_door(self):
@@ -64,17 +71,23 @@ while running:
 
         if event.type == pygame.KEYDOWN:
 
-            # Closet switch
+            # Closet toggle
             if event.key == pygame.K_e:
                 closet_open = not closet_open
 
-            #  Under bed switch
+                # Randomize monster when opening closet
+                if closet_open:
+                    monster.monster_closet()
+
+            # Under bed toggle
             if event.key == pygame.K_q:
                 under_bed = not under_bed
 
+            # Light toggle
             if event.key == pygame.K_f:
                 light = not light
 
+            # Door toggle
             if event.key == pygame.K_d:
                 open_door = not open_door
 
