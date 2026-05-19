@@ -17,8 +17,10 @@ class Monster:
         if self.show_closet_monster:
             pygame.draw.circle(screen, (255, 0, 0), (1065, 600), 5)
             pygame.draw.circle(screen, (255, 0, 0), (1015, 600), 5)
-
-
+    def monster_door(self):
+        if random.randint(1, 4) == 1:
+            pygame.draw.circle(screen, (255, 0, 0), (670, 575), 5)
+            pygame.draw.circle(screen, (255, 0 ,0), (710, 575), 5)
 monster = Monster()
 
 pygame.init()
@@ -223,14 +225,13 @@ while running:
 
         pygame.draw.rect(screen, (90, 50, 20), opened)
 
-        hallway = pygame.Rect(
-            door_x,
-            door_y,
-            door_width,
-            door_height
-        )
+        hallway = pygame.Rect(door_x, door_y, door_width, door_height)
+        pygame.draw.rect(screen,(10,10,10), hallway)
 
-        pygame.draw.rect(screen, (10, 10, 10), hallway)
+        handle_=pygame.Rect(758 - door_width - opened_door , 590, 17, 10)
+        pygame.draw.rect(screen, (255, 215, 0), handle_)
+
+        monster.monster_door()
 
     else:
         door = pygame.Rect(
@@ -242,14 +243,10 @@ while running:
 
         pygame.draw.rect(screen, (120, 70, 25), door)
 
-        pygame.draw.circle(
-            screen,
-            (255, 215, 0),
-            (755, 595),
-            9
-        )
+        handle=pygame.Rect(723, 590, 35, 10)
+        pygame.draw.circle(screen, (255, 215, 0), (755, 595), 9)
+        pygame.draw.rect(screen, (255, 215, 0 ), handle)
 
-    # Under bed
     if under_bed:
 
         overlay = pygame.Surface((1200, 800))
@@ -273,6 +270,46 @@ while running:
             (mouse_x, mouse_y),
             20
         )
+
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  
+            if hallway.collidepoint(event.pos):
+                pygame.draw.rect(screen, (0, 255, 0), hallway)
+
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  
+            if under_space.collidepoint(event.pos):
+                pygame.draw.rect(screen, (0, 255, 0), under_space)
+
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  
+            if inside.collidepoint(event.pos):
+                pygame.draw.rect(screen, (0, 255, 0), inside)
+
+
+
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  
+            if hallway.collidepoint(event.pos):
+                pygame.draw.rect(screen, (0, 255, 0), hallway)
+
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  
+            if under_space.collidepoint(event.pos):
+                pygame.draw.rect(screen, (0, 255, 0), under_space)
+
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  
+            if inside.collidepoint(event.pos):
+                pygame.draw.rect(screen, (0, 255, 0), inside)
+
+
 
     # Controls text
     controls = font.render(
