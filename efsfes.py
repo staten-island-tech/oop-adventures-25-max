@@ -4,27 +4,27 @@ import sys
 
 class Monster:
     def __init__(self):
-        pass
-    def monster_bed(self):
-         if random.randint(1, 4) == 1:
-            pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
-            pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
-    def monster_closet(self):
-
-        # runs once when opened
-        self.show_closet_monster = (
-            random.randint(1, 4) == 1
-        )
-
-    def draw(self):
-
+        self.show_closet_monster = False
+        self.show_bed_monster = False
+        self.show_door_monster = False
+    def roll_closet(self):
+        self.show_closet_monster = random.randint(1, 1) == 1
+    def roll_bed(self):
+        self.show_bed_monster = random.randint(1, 4) == 1
+    def roll_door(self):
+        self.show_door_monster = random.randint(1, 4) == 1
+    def draw_closet(self):
         if self.show_closet_monster:
             pygame.draw.circle(screen, (255, 0, 0), (1065, 600), 5)
             pygame.draw.circle(screen, (255, 0, 0), (1015, 600), 5)
-    def monster_door(self):
-        if random.randint(1, 4) == 1:
+    def draw_bed(self):
+        if self.show_bed_monster:
+            pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
+            pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
+    def draw_door(self):
+        if self.show_door_monster:
             pygame.draw.circle(screen, (255, 0, 0), (670, 575), 5)
-            pygame.draw.circle(screen, (255, 0 ,0), (710, 575), 5)
+            pygame.draw.circle(screen, (255, 0, 0), (710, 575), 5)
 monster = Monster()
 
 pygame.init()
@@ -62,6 +62,10 @@ under_bed = False
 open_door = False
 light = False
 
+hallway = pygame.Rect(0,0,0,0)
+inside = pygame.Rect(0,0,0,0)
+under_space = pygame.Rect(0,0,0,0)
+
 #  UNDER BED STATE
 under_bed = False
 
@@ -76,13 +80,13 @@ while running:
             if event.key == pygame.K_e:
                 closet_open = not closet_open
 
-                # Randomize monster when opening closet
-                if closet_open:
-                    monster.monster_closet()
+
 
             # Under bed toggle
             if event.key == pygame.K_q:
                 under_bed = not under_bed
+
+            
 
             # Light toggle
             if event.key == pygame.K_f:
@@ -91,6 +95,8 @@ while running:
             # Door toggle
             if event.key == pygame.K_d:
                 open_door = not open_door
+
+
 
     screen.fill((30, 30, 30))
 
@@ -180,7 +186,8 @@ while running:
         )
 
         pygame.draw.rect(screen, (20, 20, 20), inside)
-        monster.monster_closet()
+        if monster.roll_closet() ==1:
+            monster.draw_closet()
         
 
     else:
@@ -219,7 +226,8 @@ while running:
         handle_=pygame.Rect(758 - door_width - opened_door , 590, 17, 10)
         pygame.draw.rect(screen, (255, 215, 0), handle_)
 
-        monster.monster_door()
+        if monster.roll_closet():
+            monster.draw_closet()
 
     else:
         door = pygame.Rect(door_x, door_y, door_width, door_height)
@@ -237,7 +245,8 @@ while running:
 
         under_space = pygame.Rect(20, 650, 300, 80)
         pygame.draw.rect(screen, (10, 10, 10), under_space)
-        monster.monster_bed()
+        if monster.roll_bed():
+            monster.draw_closet()
         
     if light == True:
         mouse_x, mouse_y = pygame.mouse.get_pos()
