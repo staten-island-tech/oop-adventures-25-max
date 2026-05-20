@@ -2,46 +2,54 @@ import pygame
 import random
 import sys
 
+
 class Monster:
     def __init__(self):
-        pass
-    def monster_bed(self):
-         if random.randint(1, 4) == 1:
-            pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
-            pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
-    def monster_closet(self):
-
-        # runs once when opened
-        self.show_closet_monster = (
-            random.randint(1, 4) == 1
-        )
-
-    def draw(self):
-
+        self.show_closet_monster = False
+        self.show_bed_monster = False
+        self.show_door_monster = False
+    def roll_closet(self):
+        self.show_closet_monster = random.randint(1, 4) == 1
+    def roll_bed(self):
+        self.show_bed_monster = random.randint(1, 4) == 1
+    def roll_door(self):
+        self.show_door_monster = random.randint(1, 4) == 1
+    def draw_closet(self):
         if self.show_closet_monster:
             pygame.draw.circle(screen, (255, 0, 0), (1065, 600), 5)
             pygame.draw.circle(screen, (255, 0, 0), (1015, 600), 5)
-    def monster_door(self):
-        if random.randint(1, 4) == 1:
+    def draw_bed(self):
+        if self.show_bed_monster:
+            pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
+            pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
+    def draw_door(self):
+        if self.show_door_monster:
             pygame.draw.circle(screen, (255, 0, 0), (670, 575), 5)
-            pygame.draw.circle(screen, (255, 0 ,0), (710, 575), 5)
+            pygame.draw.circle(screen, (255, 0, 0), (710, 575), 5)
 monster = Monster()
 
+
 pygame.init()
+
 
 screen = pygame.display.set_mode((1200, 800))
 pygame.display.set_caption("Bedroom Survival")
 
+
 clock = pygame.time.Clock()
 running = True
 
+
 font = pygame.font.SysFont(None, 23)
+
 
 screen_width = 1200
 screen_height = 800
 
+
 # Timer
 start_time = pygame.time.get_ticks()
+
 
 # Closet settings
 closet_x = 950
@@ -49,11 +57,13 @@ closet_y = 450
 closet_width = 180
 closet_height = 300
 
+
 #door settings
 door_x = 600
 door_y =  440
 door_width = 175
 door_height = 300
+
 
 opened_door = door_width // 3
 closet_door_width = closet_width // 2
@@ -62,37 +72,62 @@ under_bed = False
 open_door = False
 light = False
 
+
+hallway = pygame.Rect(0,0,0,0)
+inside = pygame.Rect(0,0,0,0)
+under_space = pygame.Rect(0,0,0,0)
+
+
 #  UNDER BED STATE
 under_bed = False
+
 
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
+
         if event.type == pygame.KEYDOWN:
+
 
             # Closet toggle
             if event.key == pygame.K_e:
                 closet_open = not closet_open
 
-                # Randomize monster when opening closet
-                if closet_open:
-                    monster.monster_closet()
+
+
+
+
 
             # Under bed toggle
             if event.key == pygame.K_q:
                 under_bed = not under_bed
 
+
+           
+
+
             # Light toggle
             if event.key == pygame.K_f:
                 light = not light
+
 
             # Door toggle
             if event.key == pygame.K_d:
                 open_door = not open_door
 
+
+
+
+
+
     screen.fill((30, 30, 30))
+
+
+
+
+
 
 
 
@@ -109,15 +144,18 @@ while running:
         text_rect = text_surface.get_rect(center=(600, 100))
         screen.blit(text_surface, text_rect)
 
+
     # Floor
     floor = pygame.Rect(0, 740, 1200, 60)
     pygame.draw.rect(screen, (50, 50, 50), floor)
+
 
     # Bed
     bed = pygame.Rect(0, 625, 350, 100)
     pillow = pygame.Rect(20, 615, 80, 30)
     pygame.draw.rect(screen, (200, 200, 200), bed)
     pygame.draw.rect(screen, (255, 255, 255), pillow)
+
 
     #window
     window = pygame.Rect(325, 350, 186, 180)
@@ -129,6 +167,8 @@ while running:
     pygame.draw.rect(screen,(30,30,30), window2)
 
 
+
+
     # Closet body
     closet_body = pygame.Rect(
         closet_x,
@@ -137,7 +177,9 @@ while running:
         closet_height
     )
 
+
     pygame.draw.rect(screen, (120, 70, 25), closet_body)
+
 
     # Closet doors
     left_door = pygame.Rect(
@@ -147,12 +189,14 @@ while running:
         closet_height
     )
 
+
     right_door = pygame.Rect(
         closet_x + closet_door_width,
         closet_y,
      closet_door_width,
         closet_height
     )
+
 
     if closet_open:
         open_left = pygame.Rect(
@@ -162,6 +206,7 @@ while running:
             closet_height
         )
 
+
         open_right = pygame.Rect(
             closet_x + closet_width,
             closet_y,
@@ -169,8 +214,10 @@ while running:
             closet_height
         )
 
+
         pygame.draw.rect(screen, (90, 50, 20), open_left)
         pygame.draw.rect(screen, (90, 50, 20), open_right)
+
 
         inside = pygame.Rect(
             closet_x + 10,
@@ -179,13 +226,16 @@ while running:
             closet_height - 20
         )
 
+
         pygame.draw.rect(screen, (20, 20, 20), inside)
-        monster.monster_closet()
-        
+        monster.roll_closet()
+       
+
 
     else:
         pygame.draw.rect(screen, (139, 69, 19), left_door)
         pygame.draw.rect(screen, (139, 69, 19), right_door)
+
 
         pygame.draw.line(
             screen,
@@ -195,6 +245,7 @@ while running:
             3
         )
 
+
         pygame.draw.circle(
             screen,
             (255, 215, 0),
@@ -202,32 +253,39 @@ while running:
             5
         )
 
+
         pygame.draw.circle(
             screen,
             (255, 215, 0),
             (closet_x + closet_door_width + 15, closet_y + closet_height // 2),
             5
         )
-        
+       
     if open_door:
         opened = pygame.Rect(door_x - opened_door, door_y, opened_door, door_height)
         pygame.draw.rect(screen, (90, 50, 20), opened)
 
+
         hallway = pygame.Rect(door_x, door_y, door_width, door_height)
         pygame.draw.rect(screen,(10,10,10), hallway)
+
 
         handle_=pygame.Rect(758 - door_width - opened_door , 590, 17, 10)
         pygame.draw.rect(screen, (255, 215, 0), handle_)
 
-        monster.monster_door()
+
+        monster.roll_door()
+
 
     else:
         door = pygame.Rect(door_x, door_y, door_width, door_height)
         pygame.draw.rect(screen, (120, 70, 25), door)
 
+
         handle=pygame.Rect(723, 590, 35, 10)
         pygame.draw.circle(screen, (255, 215, 0), (755, 595), 9)
         pygame.draw.rect(screen, (255, 215, 0 ), handle)
+
 
     if under_bed:
         overlay = pygame.Surface((1200, 800))
@@ -235,13 +293,15 @@ while running:
         overlay.fill((0, 0, 0))
         screen.blit(overlay, (0, 0))
 
+
         under_space = pygame.Rect(20, 650, 300, 80)
         pygame.draw.rect(screen, (10, 10, 10), under_space)
-        monster.monster_bed()
-        
+        monster.roll_bed()
+       
     if light == True:
         mouse_x, mouse_y = pygame.mouse.get_pos()
         pygame.draw.circle(screen, (0, 255, 0), (mouse_x, mouse_y), 20)
+
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -249,22 +309,29 @@ while running:
             sys.exit()
 
 
+
+
         hallway_click = False
         under_click = False
         inside_click = False
-        
+       
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  
             if hallway.collidepoint(event.pos):
                 hallway_click=True
+
+
 
 
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  
             if under_space.collidepoint(event.pos):
                 under_click= True
 
+
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  
             if inside.collidepoint(event.pos):
                 inside_click=True
+
+
 
 
         if hallway_click:
@@ -278,21 +345,30 @@ while running:
             pygame.draw.rect(screen, (0, 255, 0), insidec)
 
 
+
+
     # Controls text
     controls = font.render("Press E to open/close closet", True, (255, 255, 255))
     screen.blit(controls, (20, 20))
 
+
     controls2 = font.render("Press Q to look under your bed", True, (255, 255, 255))
     screen.blit(controls2, (20, 50))
+
 
     controls3 = font.render("Press F to open light menu", True, (255, 255, 255))
     screen.blit(controls3, (20, 80))
 
+
     controls4 = font.render("Press D to check the door", True, (255, 255, 255))
     screen.blit(controls4, (20, 110))
+
 
     pygame.display.flip()
     clock.tick(60)
 
+
 pygame.quit()
 sys.exit()
+
+
