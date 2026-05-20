@@ -243,7 +243,6 @@ while running:
         mouse_x, mouse_y = pygame.mouse.get_pos()
         pygame.draw.circle(screen, (0, 255, 0), (mouse_x, mouse_y), 20)
 
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
