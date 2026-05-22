@@ -15,11 +15,19 @@ class Monster:
     def roll_door(self):
         self.show_door_monster = random.randint(1, 4) == 1
     def draw_closet(self):
+<<<<<<< HEAD
         if self.show_closet_monster==1:
             pygame.draw.circle(screen, (255, 0, 0), (1065, 600), 5)
             pygame.draw.circle(screen, (255, 0, 0), (1015, 600), 5)
     def draw_bed(self):
         if self.show_bed_monster==1:
+=======
+        if self.show_closet_monster:
+            pygame.draw.circle(screen, (255, 0, 0), (1065, 600), 5)
+            pygame.draw.circle(screen, (255, 0, 0), (1015, 600), 5)
+    def draw_bed(self):
+        if self.show_bed_monster:
+>>>>>>> 0f93b8f661c7f26e5815c21577424df73d6ac967
             pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
             pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
     def draw_door(self):
@@ -63,6 +71,10 @@ hallway = pygame.Rect(0,0,0,0)
 inside = pygame.Rect(0,0,0,0)
 under_space = pygame.Rect(0,0,0,0)
 
+hallway = pygame.Rect(0,0,0,0)
+inside = pygame.Rect(0,0,0,0)
+under_space = pygame.Rect(0,0,0,0)
+
 #  UNDER BED STATE
 under_bed = False
 while running:
@@ -73,15 +85,29 @@ while running:
             # Closet toggle
             if event.key == pygame.K_e:
                 closet_open = not closet_open
+<<<<<<< HEAD
             # Under bed toggle
             if event.key == pygame.K_q:
                 under_bed = not under_bed
+=======
+
+
+
+            # Under bed toggle
+            if event.key == pygame.K_q:
+                under_bed = not under_bed
+
+            
+
+>>>>>>> 0f93b8f661c7f26e5815c21577424df73d6ac967
             # Light toggle
             if event.key == pygame.K_f:
                 light = not light
             # Door toggle
             if event.key == pygame.K_d:
                 open_door = not open_door
+
+
 
     screen.fill((30, 30, 30))
 
@@ -167,8 +193,15 @@ while running:
         )
 
         pygame.draw.rect(screen, (20, 20, 20), inside)
+<<<<<<< HEAD
         monster.draw_closet()
        
+=======
+        
+        monster.draw_closet()
+        
+
+>>>>>>> 0f93b8f661c7f26e5815c21577424df73d6ac967
     else:
         pygame.draw.rect(screen, (139, 69, 19), left_door)
         pygame.draw.rect(screen, (139, 69, 19), right_door)
@@ -205,7 +238,11 @@ while running:
         handle_=pygame.Rect(758 - door_width - opened_door , 590, 17, 10)
         pygame.draw.rect(screen, (255, 215, 0), handle_)
 
+<<<<<<< HEAD
         monster.roll_door()
+=======
+        monster.draw_closet()
+>>>>>>> 0f93b8f661c7f26e5815c21577424df73d6ac967
 
     else:
         door = pygame.Rect(door_x, door_y, door_width, door_height)
@@ -223,8 +260,14 @@ while running:
 
         under_space = pygame.Rect(20, 650, 300, 80)
         pygame.draw.rect(screen, (10, 10, 10), under_space)
+<<<<<<< HEAD
         monster.roll_bed()
        
+=======
+        
+        monster.draw_closet()
+        
+>>>>>>> 0f93b8f661c7f26e5815c21577424df73d6ac967
     if light == True:
         mouse_x, mouse_y = pygame.mouse.get_pos()
         pygame.draw.circle(screen, (0, 255, 0), (mouse_x, mouse_y), 20)
@@ -274,8 +317,16 @@ while running:
     controls4 = font.render("Press D to check the door", True, (255, 255, 255))
     screen.blit(controls4, (20, 110))
 
+<<<<<<< HEAD
 
 
+=======
+    #timer
+    elapsed_ms = pygame.time.get_ticks() - start_time
+    elapsed_sec = elapsed_ms // 1000
+    timer_text = font.render(f"Time: {elapsed_sec}", True, (255, 255, 255))
+    screen.blit(timer_text, (1120, 20))
+>>>>>>> 0f93b8f661c7f26e5815c21577424df73d6ac967
     pygame.display.flip()
     clock.tick(30)
 
