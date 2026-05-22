@@ -2,6 +2,7 @@ import pygame
 import random
 import sys
 
+
 class Monster:
     def __init__(self):
         self.show_closet_monster = False
@@ -34,7 +35,8 @@ pygame.display.set_caption("Bedroom Survival")
 
 clock = pygame.time.Clock()
 running = True
-
+TIMER_INTERVAL = 10000 
+next_trigger_time = pygame.time.get_ticks() + TIMER_INTERVAL
 font = pygame.font.SysFont(None, 23)
 
 screen_width = 1200
@@ -42,25 +44,25 @@ screen_height = 800
 
 # Timer
 start_time = pygame.time.get_ticks()
-
 # Closet settings
 closet_x = 950
 closet_y = 450
 closet_width = 180
 closet_height = 300
-
 #door settings
 door_x = 600
 door_y =  440
 door_width = 175
 door_height = 300
-
 opened_door = door_width // 3
 closet_door_width = closet_width // 2
 closet_open = False
 under_bed = False
 open_door = False
 light = False
+hallway = pygame.Rect(0,0,0,0)
+inside = pygame.Rect(0,0,0,0)
+under_space = pygame.Rect(0,0,0,0)
 
 hallway = pygame.Rect(0,0,0,0)
 inside = pygame.Rect(0,0,0,0)
@@ -73,9 +75,7 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
         if event.type == pygame.KEYDOWN:
-
             # Closet toggle
             if event.key == pygame.K_e:
                 closet_open = not closet_open
@@ -91,7 +91,6 @@ while running:
             # Light toggle
             if event.key == pygame.K_f:
                 light = not light
-
             # Door toggle
             if event.key == pygame.K_d:
                 open_door = not open_door
@@ -133,7 +132,6 @@ while running:
     pygame.draw.rect(screen,(30,30,30), window1)
     window2=pygame.Rect(325, 435, 186, 10)
     pygame.draw.rect(screen,(30,30,30), window2)
-
 
     # Closet body
     closet_body = pygame.Rect(
@@ -215,7 +213,7 @@ while running:
             (closet_x + closet_door_width + 15, closet_y + closet_height // 2),
             5
         )
-        
+       
     if open_door:
         opened = pygame.Rect(door_x - opened_door, door_y, opened_door, door_height)
         pygame.draw.rect(screen, (90, 50, 20), opened)
@@ -226,6 +224,7 @@ while running:
         handle_=pygame.Rect(758 - door_width - opened_door , 590, 17, 10)
         pygame.draw.rect(screen, (255, 215, 0), handle_)
 
+        monster.roll_door()
         monster.draw_closet()
 
     else:
@@ -244,6 +243,8 @@ while running:
 
         under_space = pygame.Rect(20, 650, 300, 80)
         pygame.draw.rect(screen, (10, 10, 10), under_space)
+        monster.roll_bed()
+       
         
         monster.draw_closet()
         
@@ -256,15 +257,13 @@ while running:
             pygame.quit()
             sys.exit()
 
-
         hallway_click = False
         under_click = False
         inside_click = False
-        
+       
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  
             if hallway.collidepoint(event.pos):
                 hallway_click=True
-
 
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  
             if under_space.collidepoint(event.pos):
@@ -273,7 +272,6 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  
             if inside.collidepoint(event.pos):
                 inside_click=True
-
 
         if hallway_click:
             hallwayc = pygame.Rect(door_x, door_y, door_width, door_height)
@@ -302,15 +300,20 @@ while running:
     #timer
     elapsed_ms = pygame.time.get_ticks() - start_time
     elapsed_sec = elapsed_ms // 1000
-
+    
     timer_text = font.render(f"Time: {elapsed_sec}", True, (255, 255, 255))
     screen.blit(timer_text, (1120, 20))
 
-    if elapsed_sec >= 90:
-        screen.fill((255, 0, 0))
-
+    if elapsed_sec >= 4:
+        screen.fill((255,255,255))
+        end_text = font.render( "YYAYAYAYYA you win, it the early morning because you fell asleep",True,(0, 0, 0))
+        p = end_text.get_rect(center=(600, 100))
+        screen.blit(end_text, p)
+        end_text2 = font.render( "but it the next night, gulp",True,(0, 0, 0))
+        p2= end_text.get_rect(center=(700, 150))
+        screen.blit(end_text2, p2)
     pygame.display.flip()
-    clock.tick(60)
+    clock.tick(30)
 
 pygame.quit()
 sys.exit()
