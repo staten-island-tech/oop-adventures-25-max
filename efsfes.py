@@ -1,6 +1,33 @@
 import pygame
 import random
 
+<<<<<<< Updated upstream
+=======
+class Monster:
+    def __init__(self):
+        self.show_closet_monster = False
+        self.show_bed_monster = False
+        self.show_door_monster = False
+    def roll_closet(self):
+        self.show_closet_monster = random.randint(1, 1) == 1
+    def roll_bed(self):
+        self.show_bed_monster = random.randint(1, 4) == 1
+    def roll_door(self):
+        self.show_door_monster = random.randint(1, 4) == 1
+    def draw_closet(self):
+        if self.show_closet_monster:
+            pygame.draw.circle(screen, (255, 0, 0), (1065, 600), 5)
+            pygame.draw.circle(screen, (255, 0, 0), (1015, 600), 5)
+    def draw_bed(self):
+        if self.show_bed_monster:
+            pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
+            pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
+    def draw_door(self):
+        if self.show_door_monster:
+            pygame.draw.circle(screen, (255, 0, 0), (670, 575), 5)
+            pygame.draw.circle(screen, (255, 0, 0), (710, 575), 5)
+monster = Monster()
+>>>>>>> Stashed changes
 
 pygame.init()
 
@@ -24,9 +51,24 @@ closet_y = 450
 closet_width = 180
 closet_height = 300
 
+<<<<<<< Updated upstream
 door_width = closet_width // 2
 closet_open = False
 under_bed = False
+=======
+#door settings
+door_x = 600
+door_y =  440
+door_width = 175
+door_height = 300
+
+opened_door = door_width // 3
+closet_door_width = closet_width // 2
+closet_open = False
+under_bed = False
+open_door = False
+light = False
+>>>>>>> Stashed changes
 
 
 
@@ -48,7 +90,27 @@ while running:
             if event.key == pygame.K_q:
                 under_bed = not under_bed
 
+<<<<<<< Updated upstream
     screen.fill((15, 15, 15))
+=======
+            
+
+            # Light toggle
+            if event.key == pygame.K_f:
+                light = not light
+
+            # Door toggle
+            if event.key == pygame.K_d:
+                open_door = not open_door
+
+
+
+    screen.fill((30, 30, 30))
+
+>>>>>>> Stashed changes
+
+
+
 
     # Intro text for 3 seconds
     current_time = pygame.time.get_ticks()
@@ -73,6 +135,19 @@ while running:
     pygame.draw.rect(screen, (200, 200, 200), bed)
     pygame.draw.rect(screen, (255, 255, 255), pillow)
 
+<<<<<<< Updated upstream
+=======
+    #window
+    window = pygame.Rect(325, 350, 186, 180)
+    pygame.draw.rect(screen, (13, 14, 46), window)
+    #window cross thingy
+    window1=pygame.Rect(413, 350, 10, 180)
+    pygame.draw.rect(screen,(30,30,30), window1)
+    window2=pygame.Rect(325, 435, 186, 10)
+    pygame.draw.rect(screen,(30,30,30), window2)
+
+
+>>>>>>> Stashed changes
     # Closet body
     closet_body = pygame.Rect(
         closet_x,
@@ -123,7 +198,11 @@ while running:
             closet_height - 20
         )
 
+<<<<<<< Updated upstream
         pygame.draw.rect(screen, (20, 20, 20), inside)
+=======
+        pygame.draw.rect(screen, (20, 20, 20), inside)        
+>>>>>>> Stashed changes
 
     else:
         pygame.draw.rect(screen, (139, 69, 19), left_door)
@@ -150,7 +229,29 @@ while running:
             (closet_x + door_width + 15, closet_y + closet_height // 2),
             5
         )
+<<<<<<< Updated upstream
 
+=======
+        
+    if open_door:
+        opened = pygame.Rect(door_x - opened_door, door_y, opened_door, door_height)
+        pygame.draw.rect(screen, (90, 50, 20), opened)
+
+        hallway = pygame.Rect(door_x, door_y, door_width, door_height)
+        pygame.draw.rect(screen,(10,10,10), hallway)
+
+        handle_=pygame.Rect(758 - door_width - opened_door , 590, 17, 10)
+        pygame.draw.rect(screen, (255, 215, 0), handle_)
+
+
+    else:
+        door = pygame.Rect(door_x, door_y, door_width, door_height)
+        pygame.draw.rect(screen, (120, 70, 25), door)
+
+        handle=pygame.Rect(723, 590, 35, 10)
+        pygame.draw.circle(screen, (255, 215, 0), (755, 595), 9)
+        pygame.draw.rect(screen, (255, 215, 0 ), handle)
+>>>>>>> Stashed changes
 
     if under_bed:
         overlay = pygame.Surface((1200, 800))
@@ -160,6 +261,7 @@ while running:
 
         under_space = pygame.Rect(20, 650, 300, 80)
         pygame.draw.rect(screen, (10, 10, 10), under_space)
+<<<<<<< Updated upstream
 
         
         if random.randint(1, 4) == 1:
@@ -167,6 +269,50 @@ while running:
             pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
                 
     # Controls text
+=======
+        
+        
+    if light == True:
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        pygame.draw.circle(screen, (0, 255, 0), (mouse_x, mouse_y), 20)
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+
+        hallway_click = False
+        under_click = False
+        inside_click = False
+        
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  
+            if hallway.collidepoint(event.pos):
+                hallway_click=True
+
+
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  
+            if under_space.collidepoint(event.pos):
+                under_click= True
+
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  
+            if inside.collidepoint(event.pos):
+                inside_click=True
+
+
+        if hallway_click:
+            hallwayc = pygame.Rect(door_x, door_y, door_width, door_height)
+            pygame.draw.rect(screen,(0,255,0), hallwayc)
+        if under_click:
+            under_spacec = pygame.Rect(20, 650, 300, 80)
+            pygame.draw.rect(screen, (0, 255, 0), under_spacec)
+        if inside_click:
+            insidec = pygame.Rect(closet_x + 10, closet_y + 10, closet_width - 20, closet_height - 20)
+            pygame.draw.rect(screen, (0, 255, 0), insidec)
+
+
+    # controls text
+>>>>>>> Stashed changes
     controls = font.render("Press E to open/close closet", True, (255, 255, 255))
     screen.blit(controls, (20, 20))
 
@@ -176,6 +322,22 @@ while running:
     controls3 = font.render("Press F to shine flashlight", True, (255, 255, 255))
     screen.blit(controls3, (20, 80))
 
+<<<<<<< Updated upstream
+=======
+    controls4 = font.render("Press D to check the door", True, (255, 255, 255))
+    screen.blit(controls4, (20, 110))
+
+    #timer
+    elapsed_ms = pygame.time.get_ticks() - start_time
+    elapsed_sec = elapsed_ms // 1000
+
+    timer_text = font.render(f"Time: {elapsed_sec}", True, (255, 255, 255))
+    screen.blit(timer_text, (1120, 20))
+
+    if elapsed_sec >= 90:
+        screen.fill((255, 255, 255))
+
+>>>>>>> Stashed changes
     pygame.display.flip()
     clock.tick(60)
 
