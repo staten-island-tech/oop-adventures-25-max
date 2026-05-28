@@ -304,15 +304,17 @@ while running:
     timer_text = font.render(f"Time: {elapsed_sec}", True, (255, 255, 255))
     screen.blit(timer_text, (1120, 20))
 
-    if elapsed_sec >= 100:
-        screen.fill((255,255,255))
+    if elapsed_sec >= 10:
+        screen.fill((252,132,3))
         end_text = font.render( "YYAYAYAYYA you win, it the early morning because you fell asleep",True,(0, 0, 0))
         p = end_text.get_rect(center=(600, 100))
         screen.blit(end_text, p)
         end_text2 = font.render( "but it the next night, gulp",True,(0, 0, 0))
         p2= end_text.get_rect(center=(700, 150))
         screen.blit(end_text2, p2)
-        
+        end_text3 = font.render("ring ring ring ring",True,(0, 0, 0))
+        p3= end_text.get_rect(center=(1200, 570))
+        screen.blit(end_text3, p3)
     pygame.display.flip()
     clock.tick(1200)
 
