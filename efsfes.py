@@ -375,7 +375,7 @@ while running:
     screen.blit(timer_text, (1120, 20))
 
 
-    if elapsed_sec >= 90:
+    if elapsed_sec >= 2:
         screen.fill((255, 0, 0))
 
 
