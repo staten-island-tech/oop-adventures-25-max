@@ -315,6 +315,11 @@ while running:
         end_text3 = font.render("ring ring ring ring",True,(0, 0, 0))
         p3= end_text.get_rect(center=(1200, 570))
         screen.blit(end_text3, p3)
+    if elapsed_sec >= 15:
+        screen.fill((0,0,0))
+        new_text = font.render("it too bad you got kidnaped. HHAHHAHAHHah", True, (255,255,255))
+        q = new_text.get_rect(center=(600, 100))
+        screen.blit(new_text, q)
     pygame.display.flip()
     clock.tick(1200)
 
