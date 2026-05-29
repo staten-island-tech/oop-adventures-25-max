@@ -41,7 +41,8 @@ font = pygame.font.SysFont(None, 23)
 
 screen_width = 1200
 screen_height = 800
-
+WIDTH = 1200
+HEIGHT = 800
 # Timer
 start_time = pygame.time.get_ticks()
 # Closet settings
@@ -60,6 +61,7 @@ closet_open = False
 under_bed = False
 open_door = False
 light = False
+run = False
 hallway = pygame.Rect(0,0,0,0)
 inside = pygame.Rect(0,0,0,0)
 under_space = pygame.Rect(0,0,0,0)
@@ -67,10 +69,6 @@ under_space = pygame.Rect(0,0,0,0)
 hallway = pygame.Rect(0,0,0,0)
 inside = pygame.Rect(0,0,0,0)
 under_space = pygame.Rect(0,0,0,0)
-
-#  UNDER BED STATE
-under_bed = False
-
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -79,29 +77,18 @@ while running:
             # Closet toggle
             if event.key == pygame.K_e:
                 closet_open = not closet_open
-
-
-
             # Under bed toggle
             if event.key == pygame.K_q:
                 under_bed = not under_bed
-
-            
-
             # Light toggle
             if event.key == pygame.K_f:
                 light = not light
             # Door toggle
             if event.key == pygame.K_d:
                 open_door = not open_door
-
-
-
+            if event.key == pygame.K_w:
+                run = not run
     screen.fill((30, 30, 30))
-
-
-
-
 
     # Intro text for 3 seconds
     current_time = pygame.time.get_ticks()
@@ -117,6 +104,15 @@ while running:
     # Floor
     floor = pygame.Rect(0, 740, 1200, 60)
     pygame.draw.rect(screen, (50, 50, 50), floor)
+    #CITY
+    SKY = (0, 0, 0)
+    BUILDING = (25, 25, 35)
+    ROAD = (40, 40, 45)
+    WINDOW = (255, 220, 120)
+    LAMP = (255, 240, 180)
+    TRASH = (50, 60, 50)
+    GRAFFITI = (180, 50, 200)
+
 
     # Bed
     bed = pygame.Rect(0, 625, 350, 100)
@@ -304,7 +300,7 @@ while running:
     timer_text = font.render(f"Time: {elapsed_sec}", True, (255, 255, 255))
     screen.blit(timer_text, (1120, 20))
 
-    if elapsed_sec >= 10:
+    if elapsed_sec >= 100:
         screen.fill((252,132,3))
         end_text = font.render( "YYAYAYAYYA you win, it the early morning because you fell asleep",True,(0, 0, 0))
         p = end_text.get_rect(center=(600, 100))
@@ -315,11 +311,23 @@ while running:
         end_text3 = font.render("ring ring ring ring",True,(0, 0, 0))
         p3= end_text.get_rect(center=(1200, 570))
         screen.blit(end_text3, p3)
-    if elapsed_sec >= 15:
+    if elapsed_sec >= 110:
         screen.fill((0,0,0))
         new_text = font.render("it too bad you got kidnaped. HHAHHAHAHHah", True, (255,255,255))
         q = new_text.get_rect(center=(600, 100))
         screen.blit(new_text, q)
+    if elapsed_sec >= 120:
+        screen.fill((0,0,0))
+        new_text1 = font.render("Johnny, lets sell his organs muahahahaha", True,(255,255,255))
+        screen.blit(new_text1,q)
+        run_contols = font.render("Press W to run", True, (255, 255, 255))
+        screen.blit(run_contols, (550, 600))
+    if elapsed_sec >= 130:
+        screen.fill((0,0,0))
+        run_contols = font.render("Press W to run", True, (255, 255, 255))
+        screen.blit(run_contols, (550, 600))
+       
+        
     pygame.display.flip()
     clock.tick(1200)
 
