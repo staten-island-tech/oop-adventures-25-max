@@ -287,7 +287,7 @@ while running:
     controls2 = font.render("Press Q to look under your bed", True, (255, 255, 255))
     screen.blit(controls2, (20, 50))
 
-    controls3 = font.render("Press F to open light menu", True, (255, 255, 255))
+    controls3 = font.render("Press F to open light thing", True, (255, 255, 255))
     screen.blit(controls3, (20, 80))
 
     controls4 = font.render("Press D to check the door", True, (255, 255, 255))
@@ -329,7 +329,7 @@ while running:
        
         
     pygame.display.flip()
-    clock.tick(1200)
+    clock.tick(10000)
 
 pygame.quit()
 sys.exit()
