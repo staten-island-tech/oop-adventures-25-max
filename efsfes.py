@@ -32,7 +32,7 @@ pygame.init()
 
 screen = pygame.display.set_mode((1200, 800))
 pygame.display.set_caption("Bedroom Survival")
-
+Jumpscare = pygame.image.load('y.png').convert_alpha()
 clock = pygame.time.Clock()
 running = True
 TIMER_INTERVAL = 10000 
@@ -104,14 +104,6 @@ while running:
     # Floor
     floor = pygame.Rect(0, 740, 1200, 60)
     pygame.draw.rect(screen, (50, 50, 50), floor)
-    #CITY
-    SKY = (0, 0, 0)
-    BUILDING = (25, 25, 35)
-    ROAD = (40, 40, 45)
-    WINDOW = (255, 220, 120)
-    LAMP = (255, 240, 180)
-    TRASH = (50, 60, 50)
-    GRAFFITI = (180, 50, 200)
 
 
     # Bed
@@ -311,23 +303,23 @@ while running:
         end_text3 = font.render("ring ring ring ring",True,(0, 0, 0))
         p3= end_text.get_rect(center=(1200, 570))
         screen.blit(end_text3, p3)
-    if elapsed_sec >= 110:
+    if elapsed_sec >= 105:
         screen.fill((0,0,0))
         new_text = font.render("it too bad you got kidnaped. HHAHHAHAHHah", True, (255,255,255))
-        q = new_text.get_rect(center=(600, 100))
-        screen.blit(new_text, q)
-    if elapsed_sec >= 120:
+        screen.blit(new_text, p)
+    if elapsed_sec >= 110:
         screen.fill((0,0,0))
         new_text1 = font.render("Johnny, lets sell his organs muahahahaha", True,(255,255,255))
-        screen.blit(new_text1,q)
-        run_contols = font.render("Press W to run", True, (255, 255, 255))
-        screen.blit(run_contols, (550, 600))
-    if elapsed_sec >= 130:
+        screen.blit(new_text1,p)
+    if elapsed_sec >= 115:
         screen.fill((0,0,0))
-        run_contols = font.render("Press W to run", True, (255, 255, 255))
-        screen.blit(run_contols, (550, 600))
-       
-        
+        end_credits = font.render("The end", True,(255,255,255))
+        screen.blit(end_credits,p)
+    if elapsed_sec >= 120:
+        screen.fill((0,0,0))
+        screen.blit(Jumpscare, (0, 0))
+        pygame.display.update()
+
     pygame.display.flip()
     clock.tick(10000)
 
