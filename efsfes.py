@@ -334,13 +334,13 @@ while running:
             pygame.draw.rect(screen, (0, 255, 0), insidec)
 
     run_time = pygame.time.get_ticks()
-    if run_time - start_time >= 1000 and not monster.show_closet_monster:
+    if run_time - start_time >=7000 and not monster.show_closet_monster:
         monster.roll_closet()
         start_time = run_time
-    if run_time - start_time >= 1000 and not monster.show_door_monster:
+    if run_time - start_time >= 7000 and not monster.show_door_monster:
         monster.roll_door()
         start_time = run_time
-    if run_time - start_time >= 1000 and not monster.show_bed_monster:
+    if run_time - start_time >= 7000 and not monster.show_bed_monster:
         monster.roll_bed()
         start_time = run_time
 
