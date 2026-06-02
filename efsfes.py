@@ -9,7 +9,7 @@ class Monster:
         self.show_bed_monster = False
         self.show_door_monster = False
     def roll_closet(self):
-        self.show_closet_monster = random.randint(1, 1) == 1
+        self.show_closet_monster = random.randint(1, 4) == 1
     def roll_bed(self):
         self.show_bed_monster = random.randint(1, 4) == 1
     def roll_door(self):
@@ -124,16 +124,7 @@ while running:
 
     screen.fill((30, 30, 30))
 
-
-
-
-
-
-
-
-
-
-    # Intro text for 3 seconds
+#intro text for 10 seconds
     current_time = pygame.time.get_ticks()
     if current_time - start_time < 10000:
         text_surface = font.render(
@@ -143,6 +134,7 @@ while running:
         )
         text_rect = text_surface.get_rect(center=(600, 100))
         screen.blit(text_surface, text_rect)
+
 
 
     # Floor
@@ -229,7 +221,6 @@ while running:
 
         pygame.draw.rect(screen, (20, 20, 20), inside)
        
-        monster.draw_closet()
        
 
 
@@ -275,9 +266,6 @@ while running:
         pygame.draw.rect(screen, (255, 215, 0), handle_)
 
 
-        monster.draw_closet()
-
-
     else:
         door = pygame.Rect(door_x, door_y, door_width, door_height)
         pygame.draw.rect(screen, (120, 70, 25), door)
@@ -298,7 +286,6 @@ while running:
         under_space = pygame.Rect(20, 650, 300, 80)
         pygame.draw.rect(screen, (10, 10, 10), under_space)
        
-        monster.draw_closet()
        
     if light == True:
         mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -346,6 +333,25 @@ while running:
             insidec = pygame.Rect(closet_x + 10, closet_y + 10, closet_width - 20, closet_height - 20)
             pygame.draw.rect(screen, (0, 255, 0), insidec)
 
+    run_time = pygame.time.get_ticks()
+    if run_time - start_time >= 1000 and not monster.show_closet_monster:
+        monster.roll_closet()
+        start_time = run_time
+    if run_time - start_time >= 1000 and not monster.show_door_monster:
+        monster.roll_door()
+        start_time = run_time
+    if run_time - start_time >= 1000 and not monster.show_bed_monster:
+        monster.roll_bed()
+        start_time = run_time
+
+
+    if closet_open == True:
+        monster.draw_closet()
+    if under_bed == True:
+        monster.draw_bed()
+    if open_door == True:
+        monster.draw_door()
+        
 
 
 
@@ -375,7 +381,7 @@ while running:
     screen.blit(timer_text, (1120, 20))
 
 
-    if elapsed_sec >= 2:
+    if elapsed_sec >= 90:
         screen.fill((255, 0, 0))
 
 
