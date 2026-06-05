@@ -51,10 +51,14 @@ screen_height = 800
 start_time = pygame.time.get_ticks()
 timer_start_time = pygame.time.get_ticks()
 
-#individual monster clocks🐔🐔🐔🐔🐔🐔
+#individual monster time things🐔🐔🐔🐔🐔🐔
 monster_closet_time = pygame.time.get_ticks()
 monster_bed_time = pygame.time.get_ticks()
 monster_door_time = pygame.time.get_ticks()
+
+closet_clocll = 0
+bed_clock = 0
+door_time = 0
 
 
 # Closet settings
@@ -85,6 +89,7 @@ under_space = pygame.Rect(0,0,0,0)
 
 
 
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -99,16 +104,9 @@ while running:
                 closet_open = not closet_open
 
 
-
-
-
-
             # Under bed toggle
             if event.key == pygame.K_q:
                 under_bed = not under_bed
-
-
-           
 
 
             # Light toggle
@@ -119,11 +117,6 @@ while running:
             # Door toggle
             if event.key == pygame.K_d:
                 open_door = not open_door
-
-
-
-
-
 
     screen.fill((30, 30, 30))
 
@@ -304,8 +297,6 @@ while running:
                 hallway_click=True
 
 
-
-
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  
             if under_space.collidepoint(event.pos):
                 under_click= True
@@ -320,22 +311,22 @@ while running:
 
         if hallway_click:
             hallwayc = pygame.Rect(door_x, door_y, door_width, door_height)
-            pygame.draw.rect(screen,(0,255,0), hallwayc)
+            monster.show_door_monster = False
         if under_click:
             under_spacec = pygame.Rect(20, 650, 300, 80)
-            pygame.draw.rect(screen, (0, 255, 0), under_spacec)
+            monster.show_bed_monster = False
         if inside_click:
             insidec = pygame.Rect(closet_x + 10, closet_y + 10, closet_width - 20, closet_height - 20)
-            pygame.draw.rect(screen, (0, 255, 0), insidec)
+            monster.show_closet_monster = False
 
     run_time = pygame.time.get_ticks()
-    if run_time - monster_closet_time >=7000 and not monster.show_closet_monster:
+    if run_time - monster_closet_time >=10000 and not monster.show_closet_monster:
         monster.roll_closet()
         monster_closet_time = run_time
-    if run_time - monster_door_time >= 7000 and not monster.show_door_monster:
+    if run_time - monster_door_time >= 8000 and not monster.show_door_monster:
         monster.roll_door()
         monster_door_time = run_time
-    if run_time - monster_bed_time >= 7000 and not monster.show_bed_monster:
+    if run_time - monster_bed_time >= 9000 and not monster.show_bed_monster:
         monster.roll_bed()
         monster_bed_time = run_time
 
@@ -378,8 +369,7 @@ while running:
 
     if elapsed_sec >= 90:
         screen.fill((255, 0, 0))
-
-
+ 
     pygame.display.flip()
     clock.tick(60)
 
