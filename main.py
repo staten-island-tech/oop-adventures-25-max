@@ -49,6 +49,12 @@ screen_height = 800
 
 # Timer
 start_time = pygame.time.get_ticks()
+timer_start_time = pygame.time.get_ticks()
+
+#individual monster clocks🐔🐔🐔🐔🐔🐔
+monster_closet_time = pygame.time.get_ticks()
+monster_bed_time = pygame.time.get_ticks()
+monster_door_time = pygame.time.get_ticks()
 
 
 # Closet settings
@@ -77,9 +83,6 @@ hallway = pygame.Rect(0,0,0,0)
 inside = pygame.Rect(0,0,0,0)
 under_space = pygame.Rect(0,0,0,0)
 
-
-#  UNDER BED STATE
-under_bed = False
 
 
 while running:
@@ -292,14 +295,6 @@ while running:
         pygame.draw.circle(screen, (0, 255, 0), (mouse_x, mouse_y), 20)
 
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-
-
-
-
         hallway_click = False
         under_click = False
         inside_click = False
@@ -334,15 +329,15 @@ while running:
             pygame.draw.rect(screen, (0, 255, 0), insidec)
 
     run_time = pygame.time.get_ticks()
-    if run_time - start_time >=7000 and not monster.show_closet_monster:
+    if run_time - monster_closet_time >=7000 and not monster.show_closet_monster:
         monster.roll_closet()
-        start_time = run_time
-    if run_time - start_time >= 7000 and not monster.show_door_monster:
+        monster_closet_time = run_time
+    if run_time - monster_door_time >= 7000 and not monster.show_door_monster:
         monster.roll_door()
-        start_time = run_time
-    if run_time - start_time >= 7000 and not monster.show_bed_monster:
+        monster_door_time = run_time
+    if run_time - monster_bed_time >= 7000 and not monster.show_bed_monster:
         monster.roll_bed()
-        start_time = run_time
+        monster_bed_time = run_time
 
 
     if closet_open == True:
@@ -373,7 +368,7 @@ while running:
 
 
     #timer
-    elapsed_ms = pygame.time.get_ticks() - start_time
+    elapsed_ms = pygame.time.get_ticks() - timer_start_time
     elapsed_sec = elapsed_ms // 1000
 
 
