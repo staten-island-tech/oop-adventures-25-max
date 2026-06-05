@@ -1,35 +1,6 @@
 import pygame
 import random
 import sys
-
-
-class Monster:
-    def __init__(self):
-        self.show_closet_monster = False
-        self.show_bed_monster = False
-        self.show_door_monster = False
-    def roll_closet(self):
-        self.show_closet_monster = random.randint(1, 1) == 1
-    def roll_bed(self):
-        self.show_bed_monster = random.randint(1, 4) == 1
-    def roll_door(self):
-        self.show_door_monster = random.randint(1, 4) == 1
-    def draw_closet(self):
-        if self.show_closet_monster:
-            pygame.draw.circle(screen, (255, 0, 0), (1065, 600), 5)
-            pygame.draw.circle(screen, (255, 0, 0), (1015, 600), 5)
-    def draw_bed(self):
-        if self.show_bed_monster:
-            pygame.draw.circle(screen, (255, 0, 0), (100, 680), 5)
-            pygame.draw.circle(screen, (255, 0, 0), (140, 680), 5)
-    def draw_door(self):
-        if self.show_door_monster:
-            pygame.draw.circle(screen, (255, 0, 0), (670, 575), 5)
-            pygame.draw.circle(screen, (255, 0, 0), (710, 575), 5)
-monster = Monster()
-import sys
-
-
 class Monster:
     def __init__(self):
         self.show_closet_monster = False
@@ -104,19 +75,6 @@ hallway = pygame.Rect(0,0,0,0)
 inside = pygame.Rect(0,0,0,0)
 under_space = pygame.Rect(0,0,0,0)
 
-hallway = pygame.Rect(0,0,0,0)
-inside = pygame.Rect(0,0,0,0)
-under_space = pygame.Rect(0,0,0,0)
-open_door = False
-light = False
-run = False
-hallway = pygame.Rect(0,0,0,0)
-inside = pygame.Rect(0,0,0,0)
-under_space = pygame.Rect(0,0,0,0)
-
-hallway = pygame.Rect(0,0,0,0)
-inside = pygame.Rect(0,0,0,0)
-under_space = pygame.Rect(0,0,0,0)
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -138,19 +96,9 @@ while running:
             if event.key == pygame.K_w:
                 run = not run
     screen.fill((30, 30, 30))
-            # Light toggle
-            if event.key == pygame.K_f:
-                light = not light
-            # Door toggle
-            if event.key == pygame.K_d:
-                open_door = not open_door
-            if event.key == pygame.K_w:
-                run = not run
-    screen.fill((30, 30, 30))
 
     # Intro text for 3 seconds
     current_time = pygame.time.get_ticks()
-    if current_time - start_time < 10000:
     if current_time - start_time < 10000:
         text_surface = font.render(
             "Intruders are inside your house. Survive until sunrise.",
@@ -171,15 +119,6 @@ while running:
     pillow = pygame.Rect(20, 615, 80, 30)
     pygame.draw.rect(screen, (200, 200, 200), bed)
     pygame.draw.rect(screen, (255, 255, 255), pillow)
-
-    #window
-    window = pygame.Rect(325, 350, 186, 180)
-    pygame.draw.rect(screen, (13, 14, 46), window)
-    #window cross thingy
-    window1=pygame.Rect(413, 350, 10, 180)
-    pygame.draw.rect(screen,(30,30,30), window1)
-    window2=pygame.Rect(325, 435, 186, 10)
-    pygame.draw.rect(screen,(30,30,30), window2)
 
     #window
     window = pygame.Rect(325, 350, 186, 180)
@@ -247,9 +186,6 @@ while running:
         
         monster.draw_closet()
         
-        
-        monster.draw_closet()
-        
 
     else:
         pygame.draw.rect(screen, (139, 69, 19), left_door)
@@ -280,27 +216,6 @@ while running:
             (closet_x + closet_door_width + 15, closet_y + closet_height // 2),
             5
         )
-       
-    if open_door:
-        opened = pygame.Rect(door_x - opened_door, door_y, opened_door, door_height)
-        pygame.draw.rect(screen, (90, 50, 20), opened)
-
-        hallway = pygame.Rect(door_x, door_y, door_width, door_height)
-        pygame.draw.rect(screen,(10,10,10), hallway)
-
-        handle_=pygame.Rect(758 - door_width - opened_door , 590, 17, 10)
-        pygame.draw.rect(screen, (255, 215, 0), handle_)
-
-        monster.roll_door()
-        monster.draw_closet()
-
-    else:
-        door = pygame.Rect(door_x, door_y, door_width, door_height)
-        pygame.draw.rect(screen, (120, 70, 25), door)
-
-        handle=pygame.Rect(723, 590, 35, 10)
-        pygame.draw.circle(screen, (255, 215, 0), (755, 595), 9)
-        pygame.draw.rect(screen, (255, 215, 0 ), handle)
        
     if open_door:
         opened = pygame.Rect(door_x - opened_door, door_y, opened_door, door_height)
@@ -433,35 +348,6 @@ while running:
     
     timer_text = font.render(f"Time: {elapsed_sec}", True, (255, 255, 255))
     screen.blit(timer_text, (1120, 20))
-
-    if elapsed_sec >= 100:
-        screen.fill((252,132,3))
-        end_text = font.render( "YYAYAYAYYA you win, it the early morning because you fell asleep",True,(0, 0, 0))
-        p = end_text.get_rect(center=(600, 100))
-        screen.blit(end_text, p)
-        end_text2 = font.render( "but it the next night, gulp",True,(0, 0, 0))
-        p2= end_text.get_rect(center=(700, 150))
-        screen.blit(end_text2, p2)
-        end_text3 = font.render("ring ring ring ring",True,(0, 0, 0))
-        p3= end_text.get_rect(center=(1200, 570))
-        screen.blit(end_text3, p3)
-    if elapsed_sec >= 105:
-        screen.fill((0,0,0))
-        new_text = font.render("it too bad you got kidnaped. HHAHHAHAHHah", True, (255,255,255))
-        screen.blit(new_text, p)
-    if elapsed_sec >= 110:
-        screen.fill((0,0,0))
-        new_text1 = font.render("Johnny, lets sell his organs muahahahaha", True,(255,255,255))
-        screen.blit(new_text1,p)
-    if elapsed_sec >= 115:
-        screen.fill((0,0,0))
-        end_credits = font.render("The end", True,(255,255,255))
-        screen.blit(end_credits,p)
-    if elapsed_sec >= 120:
-        screen.fill((0,0,0))
-        screen.blit(Jumpscare, (0, 0))
-        pygame.display.update()
-
 
     controls4 = font.render("Press D to check the door", True, (255, 255, 255))
     screen.blit(controls4, (20, 110))
