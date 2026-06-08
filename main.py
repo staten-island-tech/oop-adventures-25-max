@@ -26,6 +26,7 @@ class Monster:
         if self.show_door_monster:
             pygame.draw.circle(screen, (255, 0, 0), (670, 575), 5)
             pygame.draw.circle(screen, (255, 0, 0), (710, 575), 5)
+
 monster = Monster()
 
 
@@ -39,13 +40,10 @@ pygame.display.set_caption("Bedroom Survival")
 clock = pygame.time.Clock()
 running = True
 
-
 font = pygame.font.SysFont(None, 23)
-
 
 screen_width = 1200
 screen_height = 800
-
 
 # Timer
 start_time = pygame.time.get_ticks()
@@ -56,16 +54,17 @@ monster_closet_time = pygame.time.get_ticks()
 monster_bed_time = pygame.time.get_ticks()
 monster_door_time = pygame.time.get_ticks()
 
-closet_clocll = 0
-bed_clock = 0
-door_time = 0
+closet_cooldown = 0
+door_cooldown = 0
+bed_cooldown = 0
 
+closet_flashing = 0
+door_flashing = 0
+bed_flashing = 0
 
-# Closet settings
-closet_x = 950
-closet_y = 450
-closet_width = 180
-closet_height = 300
+closet_lose = 0
+door_lose = 0
+bed_lose = 0
 
 
 #door settings
@@ -75,8 +74,14 @@ door_width = 175
 door_height = 300
 
 
+# Closet settings
+closet_x = 950
+closet_y = 450
+closet_width = 180
+closet_height = 300
 opened_door = door_width // 3
 closet_door_width = closet_width // 2
+
 closet_open = False
 under_bed = False
 open_door = False
@@ -87,9 +92,7 @@ hallway = pygame.Rect(0,0,0,0)
 inside = pygame.Rect(0,0,0,0)
 under_space = pygame.Rect(0,0,0,0)
 
-
-
-
+#🐔🐔
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -120,9 +123,10 @@ while running:
 
     screen.fill((30, 30, 30))
 
+    run_time = pygame.time.get_ticks()
+
 #intro text for 10 seconds
-    current_time = pygame.time.get_ticks()
-    if current_time - start_time < 10000:
+    if run_time - start_time <= 10000:
         text_surface = font.render(
             "Intruders are inside your house. Survive until sunrise.",
             True,
@@ -153,8 +157,6 @@ while running:
     pygame.draw.rect(screen,(30,30,30), window1)
     window2=pygame.Rect(325, 435, 186, 10)
     pygame.draw.rect(screen,(30,30,30), window2)
-
-
 
 
     # Closet body
@@ -216,9 +218,6 @@ while running:
 
 
         pygame.draw.rect(screen, (20, 20, 20), inside)
-       
-       
-
 
     else:
         pygame.draw.rect(screen, (139, 69, 19), left_door)
@@ -232,7 +231,6 @@ while running:
             (closet_x + closet_door_width, closet_y + closet_height),
             3
         )
-
 
         pygame.draw.circle(
             screen,
@@ -249,6 +247,7 @@ while running:
             5
         )
        
+#door and hallway 
     if open_door:
         opened = pygame.Rect(door_x - opened_door, door_y, opened_door, door_height)
         pygame.draw.rect(screen, (90, 50, 20), opened)
@@ -282,10 +281,10 @@ while running:
         under_space = pygame.Rect(20, 650, 300, 80)
         pygame.draw.rect(screen, (10, 10, 10), under_space)
        
-       
+#flashlight stuff
     if light == True:
         mouse_x, mouse_y = pygame.mouse.get_pos()
-        pygame.draw.circle(screen, (0, 255, 0), (mouse_x, mouse_y), 20)
+        pygame.draw.circle(screen, (255, 240, 189), (mouse_x, mouse_y), 40)
 
 
         hallway_click = False
@@ -296,40 +295,49 @@ while running:
             if hallway.collidepoint(event.pos):
                 hallway_click=True
 
-
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  
             if under_space.collidepoint(event.pos):
                 under_click= True
-
 
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  
             if inside.collidepoint(event.pos):
                 inside_click=True
 
 
-
-
-        if hallway_click:
-            hallwayc = pygame.Rect(door_x, door_y, door_width, door_height)
+        if hallway_click and monster.show_door_monster == True:
             monster.show_door_monster = False
-        if under_click:
-            under_spacec = pygame.Rect(20, 650, 300, 80)
-            monster.show_bed_monster = False
-        if inside_click:
-            insidec = pygame.Rect(closet_x + 10, closet_y + 10, closet_width - 20, closet_height - 20)
-            monster.show_closet_monster = False
+            door_cooldown = run_time
+            door_flashing = run_time
 
-    run_time = pygame.time.get_ticks()
-    if run_time - monster_closet_time >=10000 and not monster.show_closet_monster:
+        if under_click and monster.show_bed_monster == True:
+            monster.show_bed_monster = False
+            bed_cooldown = run_time
+            bed_flashing = run_time
+
+        if inside_click and monster.show_closet_monster == True:
+            monster.show_closet_monster = False
+            closet_cooldown = run_time
+            closet_flashing = run_time
+
+#main monster timer
+
+    if run_time - monster_closet_time >= 10000 and run_time - closet_cooldown >= 5000 and monster.show_closet_monster == False:
         monster.roll_closet()
         monster_closet_time = run_time
-    if run_time - monster_door_time >= 8000 and not monster.show_door_monster:
+        if monster.show_closet_monster:
+            closet_lose = run_time
+
+    if run_time - monster_door_time >= 8000 and run_time - door_cooldown >= 5000 and monster.show_door_monster == False:
         monster.roll_door()
         monster_door_time = run_time
-    if run_time - monster_bed_time >= 9000 and not monster.show_bed_monster:
+        if monster.show_door_monster:
+            door_lose = run_time
+
+    if run_time - monster_bed_time >= 9000 and run_time - bed_cooldown >= 5000 and monster.show_bed_monster == False:
         monster.roll_bed()
         monster_bed_time = run_time
-
+        if monster.show_bed_monster:
+            bed_lose = run_time
 
     if closet_open == True:
         monster.draw_closet()
@@ -337,7 +345,21 @@ while running:
         monster.draw_bed()
     if open_door == True:
         monster.draw_door()
-        
+
+
+#i like this code because it uses like the math things and stuff
+#flashes after clicking
+    if door_flashing != 0 and run_time - door_flashing <= 800:
+        if (run_time//100) % 2 == 0:
+            pygame.draw.rect(screen,(255, 240, 189), hallway)
+
+    if bed_flashing !=0 and run_time - bed_flashing <= 800:
+        if (run_time//100) % 2 ==0:
+            pygame.draw.rect(screen, (255, 240, 189), under_space)
+
+    if closet_flashing != 0 and run_time - closet_flashing <= 800:
+        if (run_time//100) % 2 ==0:
+            pygame.draw.rect(screen, (255, 240, 189), inside)
 
 
 
@@ -345,14 +367,11 @@ while running:
     controls = font.render("Press E to open/close closet", True, (255, 255, 255))
     screen.blit(controls, (20, 20))
 
-
     controls2 = font.render("Press Q to look under your bed", True, (255, 255, 255))
     screen.blit(controls2, (20, 50))
 
-
     controls3 = font.render("Press F to open light menu", True, (255, 255, 255))
     screen.blit(controls3, (20, 80))
-
 
     controls4 = font.render("Press D to check the door", True, (255, 255, 255))
     screen.blit(controls4, (20, 110))
@@ -366,9 +385,19 @@ while running:
     timer_text = font.render(f"Time: {elapsed_sec}", True, (255, 255, 255))
     screen.blit(timer_text, (1120, 20))
 
-
-    if elapsed_sec >= 90:
+#if the monster is still there for 10 seconds you lose
+    if closet_lose != 0 and monster.show_closet_monster == True and run_time - closet_lose >= 10000:
         screen.fill((255, 0, 0))
+
+    if door_lose != 0 and monster.show_door_monster == True and run_time - door_lose >= 10000:
+        screen.fill((255, 0, 0))
+
+    if bed_lose != 0 and monster.show_bed_monster == True and run_time - bed_lose >= 10000:
+        screen.fill((255, 0, 0))
+
+#im putting this win screen after the lose screen because if you lose and your screen turns red it gets covered by the win screen anyways lmao
+    if elapsed_sec >= 120:
+        screen.fill((0, 255, 0))
  
     pygame.display.flip()
     clock.tick(60)
