@@ -9,7 +9,7 @@ class Monster:
         self.show_bed_monster = False
         self.show_door_monster = False
     def roll_closet(self):
-        self.show_closet_monster = random.randint(1, 4) == 1
+        self.show_closet_monster = random.randint(1, 1) == 1
     def roll_bed(self):
         self.show_bed_monster = random.randint(1, 4) == 1
     def roll_door(self):
@@ -39,6 +39,7 @@ clock = pygame.time.Clock()
 running = True
 
 font = pygame.font.SysFont(None, 23)
+font2 = pygame.font.SysFont(None, 70)
 
 screen_width = 1200
 screen_height = 800
@@ -63,6 +64,9 @@ bed_flashing = 0
 closet_lose = 0
 door_lose = 0
 bed_lose = 0
+
+lose_flash = 0
+flash_time = 0
 
 #door settings
 door_x = 600
@@ -343,25 +347,63 @@ while running:
     timer_text = font.render(f"Time: {elapsed_sec}", True, (255, 255, 255))
     screen.blit(timer_text, (1120, 20))
 
+#win screen
+    if elapsed_sec >= 25:
+        win =  True
+        if win == True:
+            screen.fill((0, 255, 0))
+            winword = font2.render("YOU WIN!!", True, (255,255,255))
+            screen.blit(winword,(500,350))
+ 
+
 
 #if the monster is still there for 10 seconds you lose
     if closet_lose != 0 and monster.show_closet_monster == True and run_time - closet_lose >= 10000:
-        screen.fill((0, 0, 0))
-        screen.blit(image, (100, 100))
+        win = False
+        if flash_time == 0:
+            flash_time = run_time
+
+        if run_time - flash_time <= 7000:
+            screen.fill((0, 0, 0))
+            if (run_time//100) % 2 ==0:
+                screen.fill((255, 255, 255))
+            screen.blit(image, (100, 100))
+        else:
+            screen.fill((0,0,0))
+            lost = font2.render("YOU LOST", True, (255,0,0))
+            screen.blit(lost,(500,350))
 
 
     if door_lose != 0 and monster.show_door_monster == True and run_time - door_lose >= 10000:
-        screen.fill((0, 0, 0))
-        screen.blit(image, (100, 100))
+        win = False
+        if flash_time == 0:
+            flash_time = run_time
+
+        if run_time - flash_time <= 7000:
+            screen.fill((0, 0, 0))
+            if (run_time//100) % 2 ==0:
+                screen.fill((255, 255, 255))
+            screen.blit(image, (100, 100))
+        else:
+            screen.fill((0,0,0))
+            lost = font2.render("YOU LOST", True, (255,0,0))
+            screen.blit(lost,(500,350))
 
     if bed_lose != 0 and monster.show_bed_monster == True and run_time - bed_lose >= 10000:
-        screen.fill((0, 0, 0))
-        screen.blit(image, (100, 100))
+        win = False
+        if flash_time == 0:
+            flash_time = run_time
 
-#im putting this win screen after the lose screen because if you lose and your screen turns red it gets covered by the win screen anyways lmao
-    if elapsed_sec >= 120:
-        screen.fill((0, 255, 0))
- 
+        if run_time - flash_time <= 7000:
+            screen.fill((0, 0, 0))
+            if (run_time//100) % 2 ==0:
+                screen.fill((255, 255, 255))
+            screen.blit(image, (100, 100))
+        else:
+            screen.fill((0,0,0))
+            lost = font2.render("YOU LOST", True, (255,0,0))
+            screen.blit(lost,(500,350))
+
     pygame.display.flip()
     clock.tick(60)
 
