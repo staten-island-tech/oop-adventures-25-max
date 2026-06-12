@@ -48,10 +48,14 @@ screen_height = 800
 start_time = pygame.time.get_ticks()
 timer_start_time = pygame.time.get_ticks()
 
-#individual monster time things🐔🐔🐔🐔🐔🐔
+#individual  time things🐔🐔🐔🐔🐔🐔
 monster_closet_time = pygame.time.get_ticks()
 monster_bed_time = pygame.time.get_ticks()
 monster_door_time = pygame.time.get_ticks()
+
+closet_close_time = 0
+bed_close_time = 0
+door_close_time = 0
 
 closet_cooldown = 0
 door_cooldown = 0
@@ -91,6 +95,10 @@ hallway = pygame.Rect(0,0,0,0)
 inside = pygame.Rect(0,0,0,0)
 under_space = pygame.Rect(0,0,0,0)
 
+#win/lose
+win = False
+lose = False
+
 
 #🐔🐔
 while running:
@@ -99,23 +107,27 @@ while running:
             running = False
         if event.type == pygame.KEYDOWN:
 
-
-            # Closet toggle
             if event.key == pygame.K_e:
-                closet_open = not closet_open
+                if not open_door and not under_bed and run_time - closet_close_time >= 1500:
+                    if closet_open == True: 
+                        closet_close_time = run_time
+                    closet_open = not closet_open
 
-            # Under bed toggle
             if event.key == pygame.K_q:
-                under_bed = not under_bed
+                if not open_door and not closet_open and run_time - bed_close_time >= 1500:
+                    if under_bed == True:
+                        bed_close_time = run_time
+                    under_bed = not under_bed
+
+            if event.key == pygame.K_d:
+                if not closet_open and not under_bed and run_time - door_close_time >= 1500:
+                    if open_door == True:
+                        door_close_time = run_time
+                    open_door = not open_door
 
             # Light toggle
             if event.key == pygame.K_f:
                 light = not light
-
-            # Door toggle
-            if event.key == pygame.K_d:
-                open_door = not open_door
-
 
     screen.fill((30, 30, 30))
 
@@ -124,7 +136,7 @@ while running:
 #intro text for 10 seconds
     if run_time - start_time <= 10000:
         text_surface = font.render(
-            "Intruders are inside your house. Survive until sunrise.",
+            "Intruders are inside your house. Survive until sunrise!!",
             True,
             (255, 255, 255)
         )
@@ -285,17 +297,17 @@ while running:
             closet_flashing = run_time
 
 #main monster timer
-    if run_time - monster_closet_time >= 10000 and run_time - closet_cooldown >= 5000 and monster.show_closet_monster == False:
+    if run_time - monster_closet_time >= 10000 and run_time - closet_cooldown >= 5000 and monster.show_closet_monster == False and lose == False and win == False:
         monster.roll_closet()
         monster_closet_time = run_time
         if monster.show_closet_monster:
             closet_lose = run_time
-    if run_time - monster_door_time >= 8000 and run_time - door_cooldown >= 5000 and monster.show_door_monster == False:
+    if run_time - monster_door_time >= 8000 and run_time - door_cooldown >= 5000 and monster.show_door_monster == False and lose == False and win == False:
         monster.roll_door()
         monster_door_time = run_time
         if monster.show_door_monster:
             door_lose = run_time
-    if run_time - monster_bed_time >= 9000 and run_time - bed_cooldown >= 5000 and monster.show_bed_monster == False:
+    if run_time - monster_bed_time >= 9000 and run_time - bed_cooldown >= 5000 and monster.show_bed_monster == False and lose == False and win == False:
         monster.roll_bed()
         monster_bed_time = run_time
         if monster.show_bed_monster:
@@ -348,10 +360,12 @@ while running:
     screen.blit(timer_text, (1120, 20))
 
 #win screen
-    if elapsed_sec >= 25:
+    if elapsed_sec >= 120 and lose == False:
         win =  True
-        if win == True:
-            screen.fill((0, 255, 0))
+
+    if win == True:
+        screen.fill((0, 255, 0))
+        if (run_time//100) % 2 ==0: 
             winword = font2.render("YOU WIN!!", True, (255,255,255))
             screen.blit(winword,(500,350))
  
@@ -359,50 +373,26 @@ while running:
 
 #if the monster is still there for 10 seconds you lose
     if closet_lose != 0 and monster.show_closet_monster == True and run_time - closet_lose >= 10000:
-        win = False
-        if flash_time == 0:
-            flash_time = run_time
-
-        if run_time - flash_time <= 7000:
-            screen.fill((0, 0, 0))
-            if (run_time//100) % 2 ==0:
-                screen.fill((255, 255, 255))
-            screen.blit(image, (100, 100))
-        else:
-            screen.fill((0,0,0))
-            lost = font2.render("YOU LOST", True, (255,0,0))
-            screen.blit(lost,(500,350))
-
-
+        lose = True
+        
     if door_lose != 0 and monster.show_door_monster == True and run_time - door_lose >= 10000:
-        win = False
-        if flash_time == 0:
-            flash_time = run_time
-
-        if run_time - flash_time <= 7000:
-            screen.fill((0, 0, 0))
-            if (run_time//100) % 2 ==0:
-                screen.fill((255, 255, 255))
-            screen.blit(image, (100, 100))
-        else:
-            screen.fill((0,0,0))
-            lost = font2.render("YOU LOST", True, (255,0,0))
-            screen.blit(lost,(500,350))
+        lose = True
 
     if bed_lose != 0 and monster.show_bed_monster == True and run_time - bed_lose >= 10000:
-        win = False
+        lose = True
+
+    if lose == True:
         if flash_time == 0:
             flash_time = run_time
-
         if run_time - flash_time <= 7000:
             screen.fill((0, 0, 0))
-            if (run_time//100) % 2 ==0:
+            if (run_time//100) % 2 == 0:
                 screen.fill((255, 255, 255))
             screen.blit(image, (100, 100))
         else:
-            screen.fill((0,0,0))
-            lost = font2.render("YOU LOST", True, (255,0,0))
-            screen.blit(lost,(500,350))
+            screen.fill((0, 0, 0))
+            lost_text = font2.render("YOU LOST", True, (255, 0, 0))
+            screen.blit(lost_text, (500, 350))
 
     pygame.display.flip()
     clock.tick(60)
